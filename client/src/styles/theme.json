@@ -1,0 +1,14 @@
+{
+  "background": "#0e0e15",
+  "textLight": "#fff",
+  "fontMain": "'Balsamiq Sans', cursive",
+  "fontHighlight": "'STIX Two Text', serif",
+  "fontDull": "grey",
+
+  "media": {
+    "mobileDown": "@media(max-width: 39.9375em)",
+    "tabletUp": "@media(min-width: 40em)",
+    "desktopUp": "@media(min-width: 64em)",
+    "desktopXLUp": "@media(min-width:90em)"
+  }
+}
