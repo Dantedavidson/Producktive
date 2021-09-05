@@ -1,10 +1,10 @@
-import { _Header, Img } from './Header.styles';
+import * as S from './Header.styles';
 import Logo from '../../images/producktive.svg';
 const Header = () => {
   return (
-    <_Header>
-      <Img src={Logo} />
-    </_Header>
+    <S.Header>
+      <S.Image src={Logo} />
+    </S.Header>
   );
 };
 export default Header;
