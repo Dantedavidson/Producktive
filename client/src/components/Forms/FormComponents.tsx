@@ -6,9 +6,18 @@ interface InputProps {
   label: string;
   defaultValue: string;
   control: Control;
+  error?: string;
+  errorMessage?: string;
 }
 
-export const Input = ({ id, label, defaultValue, control }: InputProps) => {
+export const Input = ({
+  id,
+  label,
+  defaultValue,
+  control,
+  error,
+  errorMessage,
+}: InputProps) => {
   return (
     <Controller
       name={id}
@@ -20,6 +29,8 @@ export const Input = ({ id, label, defaultValue, control }: InputProps) => {
           label={label}
           variant='outlined'
           style={{ width: '100%' }}
+          error={!!error}
+          helperText={error ? errorMessage : ''}
         />
       )}
     ></Controller>

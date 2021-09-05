@@ -3,7 +3,10 @@ import { Input } from './FormComponents';
 import { Header } from '../index';
 import { useForm } from 'react-hook-form';
 
-const Login = () => {
+interface Props {
+  setView: React.Dispatch<React.SetStateAction<'login' | 'signup'>>;
+}
+const Login = ({ setView }: Props) => {
   const {
     register,
     control,
@@ -38,7 +41,8 @@ const Login = () => {
         </S.FormButton>
       </S.Form>
       <S.Text $center>
-        Need an account? <S.Anchor>Signup</S.Anchor>
+        Need an account?{' '}
+        <S.Anchor onClick={() => setView('signup')}>Signup</S.Anchor>
       </S.Text>
       <S.Text $center>OR</S.Text>
       <S.FormButton variant='contained' color='primary'>
