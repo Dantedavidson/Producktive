@@ -10,7 +10,7 @@ app.use(express.json());
 
 const mongoDB = process.env.MONGODB_CONNECTION_STRING;
 
-mongoose.connect(`${mongoDB}`);
+mongoose.connect(mongoDB as string);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
