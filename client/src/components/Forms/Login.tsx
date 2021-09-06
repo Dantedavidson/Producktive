@@ -1,23 +1,31 @@
 import * as S from './Form.styles';
 import { Input } from './FormComponents';
 import { Header } from '../index';
-import { useForm } from 'react-hook-form';
+import { useActions } from '../../hooks';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 interface Props {
   setView: React.Dispatch<React.SetStateAction<'login' | 'signup'>>;
 }
+interface FormInputs {
+  username: string;
+  password: string;
+}
 const Login = ({ setView }: Props) => {
   const {
-    register,
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
+  const { loginUser } = useActions();
+  const onSubmit: SubmitHandler<FormInputs> = data => {
+    console.log(data);
+    loginUser(data);
+  };
   return (
     <S.Container>
       <Header />
-      <S.Form>
+      <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Title>Login Details</S.Title>
         <S.Row>
           <Input
@@ -36,7 +44,7 @@ const Login = ({ setView }: Props) => {
           />
         </S.Row>
 
-        <S.FormButton variant='contained' color='primary'>
+        <S.FormButton variant='contained' color='primary' type='submit'>
           Login
         </S.FormButton>
       </S.Form>

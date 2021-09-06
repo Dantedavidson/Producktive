@@ -1,6 +1,7 @@
 import * as S from './Form.styles';
 import { Input } from './FormComponents';
 import { Header } from '../index';
+import { useActions } from '../../hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -33,9 +34,10 @@ const Signup = ({ setView }: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<FormInputs> = e => {
-    console.log(e);
-    console.log('i went off');
+  const { signupUser } = useActions();
+  const onSubmit: SubmitHandler<FormInputs> = data => {
+    console.log(data);
+    signupUser(data);
   };
   return (
     <S.Container>
