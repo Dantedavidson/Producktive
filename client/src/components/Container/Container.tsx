@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { AddButton, Lists } from '../index';
 const ContainerStyled = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 const Container = () => {
