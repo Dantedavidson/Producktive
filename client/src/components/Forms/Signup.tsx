@@ -41,7 +41,7 @@ const Signup = ({ setView }: Props) => {
   };
   return (
     <S.Container>
-      <Header />
+      <Header small />
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Title>Sign Up</S.Title>
         <S.Row>

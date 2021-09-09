@@ -1,8 +1,13 @@
 import * as S from './Header.styles';
 import Logo from '../../images/producktive.svg';
-const Header = () => {
+
+interface Props {
+  small?: boolean;
+}
+
+const Header = ({ small }: Props) => {
   return (
-    <S.Header>
+    <S.Header small={small}>
       <S.Image src={Logo} />
     </S.Header>
   );

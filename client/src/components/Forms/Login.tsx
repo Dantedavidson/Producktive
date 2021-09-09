@@ -24,7 +24,7 @@ const Login = ({ setView }: Props) => {
   };
   return (
     <S.Container>
-      <Header />
+      <Header small />
       <S.Form onSubmit={handleSubmit(onSubmit)}>
         <S.Title>Login Details</S.Title>
         <S.Row>
