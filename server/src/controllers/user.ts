@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import User, { UserDocument, UserDetails } from '../models/user';
 import jwt from 'jsonwebtoken';
-import Board from '../models/board';
-import { createUser as _createUser, findUser } from '../services/user';
-import { createBoard as _createBoard } from '../services/board';
+import * as UserService from '../services/user';
+import * as BoardService from '../services/board';
 
 interface Data {
   token: string | null;
@@ -12,15 +10,16 @@ interface Data {
 
 export const createUser = async function (req: Request, res: Response) {
   try {
-    const board = await _createBoard({});
-    await board.save();
+    const board = await BoardService.create({});
     const input = {
       username: req.body.username,
       password: req.body.password,
       board: board.id,
     };
-    const user = await _createUser(input);
+    const user = await UserService.create(input);
     await user.save();
+    console.log('got this far');
+    await board.save();
     const token = jwt.sign(
       {
         _id: user._id,
@@ -37,7 +36,7 @@ export const createUser = async function (req: Request, res: Response) {
 
 export const loginUser = async function (req: Request, res: Response) {
   try {
-    const user = await findUser(req.body.username);
+    const user = await UserService.find(req.body.username);
 
     if (!user)
       return res
@@ -69,4 +68,23 @@ export const loginUser = async function (req: Request, res: Response) {
 
 export const getUser = async function (req: Request, res: Response) {
   res.send('This is a response');
+};
+
+export const deleteUser = async function (req: Request, res: Response) {
+  try {
+    const result = await UserService.remove(req.token._id);
+    res.send(result);
+  } catch (err) {
+    res.status(404).send(err);
+  }
+};
+
+export const deleteAllUsers = async function (req: Request, res: Response) {
+  try {
+    const resultBoard = await BoardService.removeAll();
+    const resultUser = await UserService.removeAll();
+    res.send({ resultBoard, resultUser });
+  } catch (err) {
+    res.status(404).send(err);
+  }
 };

@@ -21,7 +21,11 @@ const List = ({ index, column, tasks }: ListProps) => {
     <Draggable draggableId={column.id} index={index}>
       {provided => {
         return (
-          <S.List {...provided.draggableProps} ref={provided.innerRef}>
+          <S.List
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
             <S.Header>
               <S.Title>{column.title}</S.Title>
               <FontAwesomeIcon icon={faEllipsisH} />

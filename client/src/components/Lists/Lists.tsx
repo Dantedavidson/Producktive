@@ -33,6 +33,7 @@ const Lists = ({}: ListsProps) => {
                   />
                 );
               })}
+              {provided.placeholder}
             </Container>
           );
         }}

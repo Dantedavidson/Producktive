@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import Board from './board';
 
 export interface UserDetails {
   username: string;
@@ -38,6 +39,17 @@ userSchema.pre('save', async function (this: UserDocument, next: any) {
   this.password = hash;
 
   return next();
+});
+userSchema.pre('deleteOne', async function (this: UserDocument, next: any) {
+  try {
+    console.log('got this far');
+    const board = await Board.deleteOne({ id: this.board });
+    console.log(board);
+    return next();
+  } catch (err) {
+    console.log(err);
+    return next();
+  }
 });
 
 userSchema.methods.comparePasswords = async function (
