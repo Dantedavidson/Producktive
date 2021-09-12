@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import userRouter from './routes/user';
 import listRouter from './routes/list';
+import itemRouter from './routes/listItem';
 import { JwtPayload } from 'jsonwebtoken';
 import router from './routes/user';
 
@@ -22,6 +23,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 router.use(express.json());
 app.use('/api/users', userRouter);
 app.use('/api/list', listRouter);
+app.use('/api/listItem', itemRouter);
 
 app.listen('3001', (): void => {
   console.log('Server Running!');

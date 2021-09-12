@@ -42,3 +42,13 @@ export const updateList = async function (req: Request, res: Response) {
     res.status(404).send(err);
   }
 };
+
+export const updateListOrder = async function (req: Request, res: Response) {
+  try {
+    const { board } = req.token;
+    const update = await ListService.reorder(board, req.body.columnOrder);
+    return res.send(update);
+  } catch (err) {
+    return res.status(404).send(err);
+  }
+};
