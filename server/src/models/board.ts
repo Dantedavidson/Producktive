@@ -6,6 +6,7 @@ export type Column = {
   title: string;
   tasks: string[];
 };
+export type ColumnDoc = mongoose.Document & Column;
 
 type Task = {
   id: string;
