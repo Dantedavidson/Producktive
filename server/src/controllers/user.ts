@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import User from '../models/user';
+import Board from '../models/board';
+import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import * as UserService from '../services/user';
 import * as BoardService from '../services/board';
@@ -9,25 +12,30 @@ interface Data {
 }
 
 export const createUser = async function (req: Request, res: Response) {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    const board = await BoardService.create({});
+    const board = await BoardService.create({}, session);
     const input = {
       username: req.body.username,
       password: req.body.password,
-      board: board.id,
+      board: board[0].id,
     };
-    const user = await UserService.create(input);
+    const user = await UserService.create(input, session);
     const token = jwt.sign(
       {
-        _id: user._id,
-        board: user.board,
+        _id: user[0].id,
+        board: user[0].board,
       },
       process.env.TOKEN_SECERET as string
     );
-
+    await session.commitTransaction();
     res.send({ token: token, error: null });
   } catch (err) {
+    console.log(err);
     res.send({ token: null, error: 'Something went wrong' });
+  } finally {
+    session.endSession();
   }
 };
 

@@ -1,7 +1,11 @@
+import { ClientSession } from 'mongoose';
 import Board, { BoardDocument } from '../models/board';
 
-export async function create(input: BoardDocument | {}) {
-  return Board.create(input);
+export async function create(
+  input: BoardDocument | {},
+  session: ClientSession
+) {
+  return Board.create([input], { session });
 }
 
 export async function find(id: string) {
