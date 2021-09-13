@@ -1,6 +1,5 @@
-import Board, { BoardDocument, Column, Task } from '../models/board';
+import { BoardDocument, Column, Task } from '../models/board';
 import _ from 'lodash';
-import { find } from './board';
 import { v4 } from 'uuid';
 
 export function create(title: string = '') {
@@ -13,22 +12,29 @@ export function create(title: string = '') {
   return task;
 }
 
-export async function addToTasks(boardId: string, task: Task) {
-  const board = await find(boardId);
-  if (!board) return null;
+export async function addToTasks(board: BoardDocument, task: Task) {
   board.tasks.set(`${task.id}`, task);
   return board.save();
 }
 
 export async function addToList(
-  boardId: string,
-  listId: string,
+  board: BoardDocument,
+  list: Column,
   taskId: string
 ) {
-  const board = await find(boardId);
-  if (!board) return null;
-  const temp = board.columns.get(`${listId}`) as Column;
-  const tasks = [...temp.tasks, taskId];
-  board.columns.set(`${listId}`, { id: temp.id, title: temp.title, tasks });
+  const tasks = [...list.tasks, taskId];
+  board.columns.set(`${list.id}`, { id: list.id, title: list.title, tasks });
   return board.save();
 }
+
+export async function removeFromList(
+  board: BoardDocument,
+  list: Column,
+  taskId: string
+) {
+  const tasks = list.tasks.filter(task => task !== taskId);
+  board.columns.set(`${list.id}`, { id: list.id, title: list.title, tasks });
+  return board.save();
+}
+
+export async function updateTitle(boardId: string, task: Task, title: string) {}

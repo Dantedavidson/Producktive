@@ -17,9 +17,6 @@ export const createUser = async function (req: Request, res: Response) {
       board: board.id,
     };
     const user = await UserService.create(input);
-    await user.save();
-    console.log('got this far');
-    await board.save();
     const token = jwt.sign(
       {
         _id: user._id,
