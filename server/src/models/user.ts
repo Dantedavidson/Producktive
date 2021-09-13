@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import Board from './board';
+import Joi from 'joi';
 
 export interface UserDetails {
   username: string;
@@ -17,10 +18,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    min: 5,
+    max: 25,
   },
   password: {
     type: String,
     required: true,
+    min: 5,
+    max: 25,
   },
   board: {
     type: mongoose.Schema.Types.ObjectId,
@@ -58,6 +63,15 @@ userSchema.methods.comparePasswords = async function (
   const user = this as UserDocument;
   console.log(compare, user.password);
   return bcrypt.compare(compare, user.password).catch(e => false);
+};
+
+export const validateUser = (user: UserDetails) => {
+  const schema = Joi.object({
+    username: Joi.string().min(5).max(24).required(),
+    password: Joi.string().min(5).max(24).required(),
+    board: Joi.string().required(),
+  });
+  return schema.validate(user);
 };
 
 export default mongoose.model<UserDocument>('User', userSchema);

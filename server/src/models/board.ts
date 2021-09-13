@@ -1,4 +1,4 @@
-import { string } from 'joi';
+import Joi from 'joi';
 import mongoose, { Types } from 'mongoose';
 
 export type Column = {
@@ -12,12 +12,13 @@ export type Task = {
   title: string;
   content: string;
 };
-
-export interface BoardDocument extends mongoose.Document {
+export interface BoardDetails {
   tasks: Types.Map<Task>;
   columns: Types.Map<Column>;
   columnOrder: string[];
 }
+
+export interface BoardDocument extends mongoose.Document, BoardDetails {}
 
 const columnSchema = new mongoose.Schema({
   id: { type: String },
@@ -44,5 +45,36 @@ const boardSchema = new mongoose.Schema({
   },
   columnOrder: { type: [String] },
 });
+
+const columnValidationSchema = Joi.object({
+  id: Joi.string(),
+  title: Joi.string().required(),
+  tasks: Joi.array().items(Joi.string()),
+});
+export const validateColumn = (column: Column) => {
+  return columnValidationSchema.validate(column);
+};
+
+const taskValidationSchema = Joi.object({
+  id: Joi.string(),
+  title: Joi.string().required(),
+  content: Joi.string(),
+});
+export const validateTask = (task: Task) => taskValidationSchema.validate(task);
+
+const columnOrderValidationSchema = Joi.object({
+  columnOrder: Joi.array().items(Joi.string()).required(),
+});
+export const validateColumnOrder = (columnOrder: string[]) =>
+  columnOrderValidationSchema.validate(columnOrder);
+
+export const validateBoard = (board: BoardDetails) => {
+  const schema = Joi.object({
+    tasks: Joi.object().pattern(Joi.string(), taskValidationSchema),
+    columns: Joi.object().pattern(Joi.string(), columnValidationSchema),
+    columnOrder: columnOrderValidationSchema,
+  });
+  return schema.validate(board);
+};
 
 export default mongoose.model<BoardDocument>('Board', boardSchema);

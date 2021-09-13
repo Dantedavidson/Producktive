@@ -37,4 +37,11 @@ export async function removeFromList(
   return board.save();
 }
 
-export async function updateTitle(boardId: string, task: Task, title: string) {}
+export async function update(
+  board: BoardDocument,
+  task: Task,
+  title: string,
+  content: string
+) {
+  board.tasks.set(`${task.id}`, { id: task.id, title, content });
+}

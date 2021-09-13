@@ -11,6 +11,7 @@ export function auth(req: Request, res: Response, next: NextFunction) {
   }
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_SECERET as string);
+    console.log(decoded);
     req.token = decoded as jwt.JwtPayload;
     next();
   } catch (err) {

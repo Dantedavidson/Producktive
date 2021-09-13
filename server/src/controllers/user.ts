@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/user';
+import { validateUser } from '../models/user';
 import Board from '../models/board';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
@@ -21,6 +21,8 @@ export const createUser = async function (req: Request, res: Response) {
       password: req.body.password,
       board: board[0].id,
     };
+    const { error } = validateUser(input);
+    if (error) throw error;
     const user = await UserService.create(input, session);
     const token = jwt.sign(
       {
