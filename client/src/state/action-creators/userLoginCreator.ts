@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
-import { Action } from '../actions/userActions';
+import { Action as UserAction } from '../actions/userActions';
+import { Action as BoardAction } from '../actions/boardActions';
 
 interface UserDetails {
   username: string;
@@ -9,9 +10,12 @@ interface UserDetails {
 }
 
 export const loginUser = (userDetails: UserDetails) => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<UserAction | BoardAction>) => {
     dispatch({
       type: ActionType.LOGIN_USER,
+    });
+    dispatch({
+      type: ActionType.LOAD_BOARD,
     });
 
     try {
@@ -22,25 +26,41 @@ export const loginUser = (userDetails: UserDetails) => {
           password: userDetails.password,
         }
       );
-      console.log(data);
-      console.log(data.token);
       dispatch({
         type: ActionType.LOGIN_USER_SUCCESS,
         payload: data.token,
+      });
+      const { board } = data;
+      console.log(board);
+      dispatch({
+        type: ActionType.LOAD_BOARD_SUCCESS,
+        payload: {
+          id: board._id,
+          tasks: board.tasks,
+          columns: board.columns,
+          columnOrder: board.columnOrder,
+        },
       });
     } catch (err) {
       dispatch({
         type: ActionType.LOGIN_USER_ERROR,
         payload: err.message,
       });
+      dispatch({
+        type: ActionType.LOAD_BOARD_ERROR,
+        payload: 'Could not load board',
+      });
     }
   };
 };
 
 export const logoutUser = () => {
-  return (dispatch: Dispatch<Action>) => {
+  return (dispatch: Dispatch<UserAction | BoardAction>) => {
     dispatch({
       type: ActionType.LOGOUT_USER,
+    });
+    dispatch({
+      type: ActionType.CLEAR_BOARD,
     });
   };
 };

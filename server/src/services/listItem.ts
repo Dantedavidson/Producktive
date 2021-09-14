@@ -37,11 +37,15 @@ export async function removeFromList(
   return board.save();
 }
 
-export async function update(
-  board: BoardDocument,
-  task: Task,
-  title: string,
-  content: string
-) {
-  board.tasks.set(`${task.id}`, { id: task.id, title, content });
+export async function removeFromTasks(board: BoardDocument, taskId: string) {
+  board.tasks.delete(taskId);
+  return board.save();
+}
+export async function update(board: BoardDocument, task: Task) {
+  board.tasks.set(`${task.id}`, {
+    id: task.id,
+    title: task.title,
+    content: task.content,
+  });
+  return board.save();
 }

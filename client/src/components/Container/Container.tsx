@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useAppSelector } from '../../hooks';
 import { AddButton, Lists } from '../index';
 const ContainerStyled = styled.div`
   display: flex;
@@ -6,10 +7,17 @@ const ContainerStyled = styled.div`
 `;
 
 const Container = () => {
+  const boardState = useAppSelector(state => state.board);
   return (
     <ContainerStyled>
-      <Lists />
-      <AddButton btnType='list' />
+      {boardState.loading ? (
+        ''
+      ) : (
+        <>
+          <Lists />
+          <AddButton btnType='list' />
+        </>
+      )}
     </ContainerStyled>
   );
 };

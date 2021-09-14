@@ -56,6 +56,12 @@ export const loginUser = async function (req: Request, res: Response) {
         .status(400)
         .json({ token: null, error: 'Incorrect user details' });
 
+    const board = await BoardService.find(user.board);
+    if (!board)
+      return res
+        .status(400)
+        .json({ token: null, board: null, error: 'Could not locate board' });
+
     const token = jwt.sign(
       {
         _id: user._id,
@@ -64,12 +70,9 @@ export const loginUser = async function (req: Request, res: Response) {
       process.env.TOKEN_SECERET as string
     );
 
-    return res
-      .status(200)
-      .header('auth-token', token)
-      .json({ token: token, error: null });
+    return res.status(200).json({ token: token, board: board, error: null });
   } catch (err) {
-    res.status(400).json({ token: null, error: `${err}` });
+    res.status(400).json({ token: null, board: null, error: `${err}` });
   }
 };
 

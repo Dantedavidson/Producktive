@@ -15,7 +15,7 @@ export function create(title: string) {
 }
 
 export async function find(board: BoardDocument, listId: string) {
-  return board.columns.get(`${listId}`) as Column;
+  return board.columns.get(`${listId}`);
 }
 
 export async function addToBoard(board: BoardDocument, list: Column) {
@@ -30,16 +30,11 @@ export async function remove(board: BoardDocument, listId: string) {
   return board.save();
 }
 
-export async function update(
-  board: BoardDocument,
-  list: Column,
-  title: string,
-  tasks: string[]
-) {
+export async function update(board: BoardDocument, list: Column) {
   board.set(`columns.${list.id}`, {
-    tasks,
+    tasks: list.tasks,
     id: list.id,
-    title,
+    title: list.title,
   });
   return board.save();
 }

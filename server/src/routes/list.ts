@@ -4,11 +4,12 @@ import {
   deleteList,
   updateList,
   updateListOrder,
+  getLists,
 } from '../controllers/list';
 import { auth } from '../middleware/auth';
 
 const router = express.Router();
-
+router.get('/', auth, getLists);
 router.post('/', auth, createList);
 router.post('/delete', auth, deleteList);
 router.post('/update', auth, updateList);

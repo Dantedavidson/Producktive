@@ -51,7 +51,7 @@ const columnValidationSchema = Joi.object({
   title: Joi.string().required(),
   tasks: Joi.array().items(Joi.string()),
 });
-export const validateColumn = (column: Column) => {
+export const validateColumn = (column: any) => {
   return columnValidationSchema.validate(column);
 };
 
@@ -60,7 +60,7 @@ const taskValidationSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string(),
 });
-export const validateTask = (task: Task) => taskValidationSchema.validate(task);
+export const validateTask = (task: any) => taskValidationSchema.validate(task);
 
 const columnOrderValidationSchema = Joi.object({
   columnOrder: Joi.array().items(Joi.string()).required(),
@@ -68,7 +68,7 @@ const columnOrderValidationSchema = Joi.object({
 export const validateColumnOrder = (columnOrder: string[]) =>
   columnOrderValidationSchema.validate(columnOrder);
 
-export const validateBoard = (board: BoardDetails) => {
+export const validateBoard = (board: any) => {
   const schema = Joi.object({
     tasks: Joi.object().pattern(Joi.string(), taskValidationSchema),
     columns: Joi.object().pattern(Joi.string(), columnValidationSchema),

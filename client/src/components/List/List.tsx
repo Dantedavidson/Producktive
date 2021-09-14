@@ -2,13 +2,9 @@ import * as S from './List.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { ListItem, Task, AddButton } from '../index';
-
-type Column = {
-  id: string;
-  title: string;
-  taskIds: string[];
-};
+import { ListItem, AddButton } from '../index';
+import { Column } from '../../state';
+import { Task } from '../../state';
 
 interface ListProps {
   index: number;
