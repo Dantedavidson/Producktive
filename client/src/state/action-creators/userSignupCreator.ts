@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
-import { Action } from '../actions/userActions';
+import { Action as UserAction } from '../actions/userActions';
+import { Action as BoardAction } from '../actions/boardActions';
 
 interface UserDetails {
   username: string;
@@ -10,9 +11,12 @@ interface UserDetails {
 }
 
 export const signupUser = (userDetails: UserDetails) => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<UserAction | BoardAction>) => {
     dispatch({
       type: ActionType.CREATE_USER,
+    });
+    dispatch({
+      type: ActionType.LOAD_BOARD,
     });
     try {
       const { data } = await axios.post(
@@ -22,14 +26,23 @@ export const signupUser = (userDetails: UserDetails) => {
           password: userDetails.password,
         }
       );
+      console.log(data.token);
       dispatch({
         type: ActionType.CREATE_USER_SUCCESS,
         payload: data.token,
+      });
+      dispatch({
+        type: ActionType.LOAD_BOARD_SUCCESS,
+        payload: { id: data.boardId, tasks: {}, columns: {}, columnOrder: [] },
       });
     } catch (err) {
       dispatch({
         type: ActionType.CREATE_USER_ERROR,
         payload: err.message,
+      });
+      dispatch({
+        type: ActionType.LOAD_BOARD_ERROR,
+        payload: 'Could not load board',
       });
     }
   };

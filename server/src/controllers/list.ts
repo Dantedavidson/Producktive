@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as ListService from '../services/list';
 import * as BoardService from '../services/board';
 import { BoardDocument } from '../models/board';
+import _ from 'lodash';
 import { validateColumn, validateColumnOrder } from '../models/board';
 
 export const createList = async function (req: Request, res: Response) {
@@ -13,7 +14,11 @@ export const createList = async function (req: Request, res: Response) {
     if (!board) throw 'Error creating list';
     const list = ListService.create(req.body.title);
     const update = await ListService.addToBoard(board, list);
-    return res.send(update);
+
+    return res.send({
+      columnOrder: update.columnOrder,
+      list: update.columns.get(list.id),
+    });
   } catch (err) {
     return res.send(err);
   }

@@ -31,7 +31,6 @@ export const loginUser = (userDetails: UserDetails) => {
         payload: data.token,
       });
       const { board } = data;
-      console.log(board);
       dispatch({
         type: ActionType.LOAD_BOARD_SUCCESS,
         payload: {

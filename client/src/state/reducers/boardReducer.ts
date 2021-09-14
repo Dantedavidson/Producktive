@@ -1,5 +1,6 @@
 import { Board } from '../types';
 import { Action } from '../actions/boardActions';
+import { Action as ListAction } from '../actions/listActions';
 import { ActionType } from '../action-types';
 
 interface BoardState {
@@ -16,7 +17,7 @@ const initialState = {
 
 const reducer = (
   state: BoardState = initialState,
-  action: Action
+  action: Action | ListAction
 ): BoardState => {
   switch (action.type) {
     case ActionType.LOAD_BOARD:
@@ -25,6 +26,21 @@ const reducer = (
       return { loading: false, error: null, board: action.payload };
     case ActionType.LOAD_BOARD_ERROR:
       return { loading: false, error: action.payload, board: null };
+    case ActionType.CLEAR_BOARD:
+      return initialState;
+    case ActionType.CREATE_LIST:
+      return {
+        loading: false,
+        error: null,
+        board: {
+          ...(state.board as Board),
+          columns: {
+            ...state.board?.columns,
+            [`${action.payload.list.id}`]: action.payload.list,
+          },
+          columnOrder: action.payload.columnOrder,
+        },
+      };
     default:
       return state;
   }
