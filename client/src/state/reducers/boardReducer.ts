@@ -41,6 +41,12 @@ const reducer = (
           columnOrder: action.payload.columnOrder,
         },
       };
+    case ActionType.DELETE_LIST:
+      return {
+        loading: false,
+        error: null,
+        board: action.payload,
+      };
     case ActionType.REORDER_LIST:
       return {
         loading: false,

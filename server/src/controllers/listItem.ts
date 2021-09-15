@@ -69,6 +69,7 @@ export const reorderTask = async function (req: Request, res: Response) {
     return res.status(400).send('Could not reorder items');
   }
 };
+
 export const moveTask = async function (req: Request, res: Response) {
   try {
     const { board: boardToken } = req.token;

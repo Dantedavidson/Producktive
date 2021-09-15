@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as ListService from '../services/list';
 import * as BoardService from '../services/board';
+import * as ListItemService from '../services/listItem';
 import { BoardDocument } from '../models/board';
 import _ from 'lodash';
 import { validateColumn, validateColumnOrder } from '../models/board';
@@ -39,7 +40,12 @@ export const deleteList = async function (req: Request, res: Response) {
     const { board: boardToken } = req.token;
     const board = await BoardService.find(boardToken);
     if (!board) throw 'Error deleting list';
-    const update = await ListService.remove(board, req.body.id);
+    const list = await ListService.find(board, req.params.id);
+    if (!list) throw 'Error deleting list';
+    for (const task of list.tasks) {
+      await ListItemService.removeFromTasks(board, task);
+    }
+    const update = await ListService.remove(board, req.params.id);
     return res.send(update);
   } catch (err) {
     console.log(err);

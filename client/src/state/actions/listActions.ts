@@ -13,7 +13,7 @@ interface UpdateListAction {
 
 interface DeleteListAction {
   type: ActionType.DELETE_LIST;
-  payload: string;
+  payload: Board;
 }
 
 interface ReorderListAction {

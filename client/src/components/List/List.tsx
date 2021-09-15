@@ -1,10 +1,11 @@
 import * as S from './List.styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Close, MoreHoriz } from '@material-ui/icons';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { ListItem, AddButton } from '../index';
 import { Column } from '../../state';
 import { Task } from '../../state';
+import { useActions, useAppSelector } from '../../hooks';
 
 interface ListProps {
   index: number;
@@ -14,6 +15,11 @@ interface ListProps {
 
 const List = ({ index, column, tasks }: ListProps) => {
   const [modal, setModal] = useState(false);
+  const { deleteList } = useActions();
+  const { token } = useAppSelector(state => state.user);
+  useEffect(() => {
+    console.log(column.id);
+  }, []);
   return (
     <Draggable draggableId={column.id} index={index}>
       {provided => {
@@ -23,12 +29,14 @@ const List = ({ index, column, tasks }: ListProps) => {
               <S.Title>{column.title}</S.Title>
               <MoreHoriz onClick={() => setModal(!modal)} />
             </S.Header>
-            <S.Modal display={modal}>
+            <S.Modal $display={modal}>
               <Close onClick={() => setModal(false)} />
-              <S.Text center>List Actions</S.Text>
+              <S.Text $isTitle>List Actions</S.Text>
               <S.Text>Copy List</S.Text>
               <S.Text>Clear List</S.Text>
-              <S.Text>Delete List</S.Text>
+              <S.Text onClick={() => deleteList(column.id, token as string)}>
+                Delete List
+              </S.Text>
             </S.Modal>
             <Droppable droppableId={column.id} type='task'>
               {(provided, snapshot) => (

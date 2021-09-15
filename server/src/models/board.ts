@@ -12,6 +12,7 @@ export type Task = {
   title: string;
   content: string;
 };
+
 export interface BoardDetails {
   tasks: Types.Map<Task>;
   columns: Types.Map<Column>;
@@ -51,6 +52,7 @@ const columnValidationSchema = Joi.object({
   title: Joi.string().required(),
   tasks: Joi.array().items(Joi.string()),
 });
+
 export const validateColumn = (column: any) => {
   return columnValidationSchema.validate(column);
 };

@@ -11,7 +11,7 @@ import { auth } from '../middleware/auth';
 const router = express.Router();
 router.get('/', auth, getLists);
 router.post('/', auth, createList);
-router.post('/delete', auth, deleteList);
+router.delete('/:id', auth, deleteList);
 router.post('/update', auth, updateList);
 router.post('/reorder', auth, updateListOrder);
 
