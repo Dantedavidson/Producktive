@@ -41,6 +41,12 @@ const reducer = (
           columnOrder: action.payload.columnOrder,
         },
       };
+    case ActionType.REORDER_LIST:
+      return {
+        loading: false,
+        error: null,
+        board: { ...(state.board as Board), columnOrder: action.payload },
+      };
     default:
       return state;
   }

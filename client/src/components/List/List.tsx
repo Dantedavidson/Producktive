@@ -1,6 +1,6 @@
 import * as S from './List.styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { Close, MoreHoriz } from '@material-ui/icons';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { ListItem, AddButton } from '../index';
 import { Column } from '../../state';
@@ -13,19 +13,23 @@ interface ListProps {
 }
 
 const List = ({ index, column, tasks }: ListProps) => {
+  const [modal, setModal] = useState(false);
   return (
     <Draggable draggableId={column.id} index={index}>
       {provided => {
         return (
-          <S.List
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-          >
-            <S.Header>
+          <S.List {...provided.draggableProps} ref={provided.innerRef}>
+            <S.Header {...provided.dragHandleProps}>
               <S.Title>{column.title}</S.Title>
-              <FontAwesomeIcon icon={faEllipsisH} />
+              <MoreHoriz onClick={() => setModal(!modal)} />
             </S.Header>
+            <S.Modal display={modal}>
+              <Close onClick={() => setModal(false)} />
+              <S.Text center>List Actions</S.Text>
+              <S.Text>Copy List</S.Text>
+              <S.Text>Clear List</S.Text>
+              <S.Text>Delete List</S.Text>
+            </S.Modal>
             <Droppable droppableId={column.id} type='task'>
               {(provided, snapshot) => (
                 <S.ListItemContainer

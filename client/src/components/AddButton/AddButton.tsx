@@ -1,9 +1,7 @@
 import * as S from './AddButton.styles';
 import { useState, useRef, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { CloseRounded, AddRounded } from '@material-ui/icons';
 import { useActions, useAppSelector } from '../../hooks';
 
 interface AddButtonProps {
@@ -28,7 +26,7 @@ const useOutsideClick = (
 };
 
 const AddButton = ({ btnType }: AddButtonProps) => {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const [input, setInput] = useState('');
   const { createList } = useActions();
   const { token } = useAppSelector(state => state.user);
@@ -56,20 +54,24 @@ const AddButton = ({ btnType }: AddButtonProps) => {
               >
                 Add List
               </Button>
-              <CloseIcon style={{ fontSize: 30, cursor: 'pointer' }} />
+              <CloseRounded style={{ fontSize: 30, cursor: 'pointer' }} />
             </S.Row>
           </>
         ) : (
           <>
-            <FontAwesomeIcon icon={faPlus} /> New List
+            <S.Wrap>
+              <AddRounded /> New List
+            </S.Wrap>
           </>
         )}
       </S.ListButton>
     );
   else
     return (
-      <S.ItemButton active>
-        <FontAwesomeIcon icon={faPlus} /> New Item
+      <S.ItemButton active={active}>
+        <S.Wrap>
+          <AddRounded /> New Item
+        </S.Wrap>
       </S.ItemButton>
     );
 };

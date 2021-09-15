@@ -10,7 +10,7 @@ const Button = styled.div<Props>`
   border-radius: 5px;
   transition: all 250ms ease;
   text-align: left;
-  cursor: ${({ active }) => active && 'default'};
+  cursor: ${({ active }) => (active ? 'default' : 'pointer')};
 
   &:hover {
     color: ${({ active }) => !active && 'rgba(69, 68, 68, 0.8)'};
@@ -18,13 +18,18 @@ const Button = styled.div<Props>`
 `;
 
 export const ListButton = styled(Button)`
-  background-color: ${({ active }) =>
-    active ? 'rgba(196, 196, 196, 0.5)' : 'rgba(196, 196, 196, 0.25)'};
-  font-size: 1.5rem;
-  width: 18.75rem;
-  padding: 0.5rem;
-  &:hover {
-    background-color: rgba(196, 196, 196, 0.5);
+  && {
+    background-color: ${({ active }) =>
+      active ? 'rgba(196, 196, 196, 0.5)' : 'rgba(196, 196, 196, 0.25)'};
+    font-size: 1.5rem;
+    min-width: 18.75rem;
+    padding: 0.5rem;
+    svg {
+      font-size: 2rem;
+    }
+    &:hover {
+      background-color: rgba(196, 196, 196, 0.5);
+    }
   }
 `;
 
@@ -51,6 +56,10 @@ export const Input = styled(TextareaAutosize)`
       outline: none;
     }
   }
+`;
+export const Wrap = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const Row = styled.div`

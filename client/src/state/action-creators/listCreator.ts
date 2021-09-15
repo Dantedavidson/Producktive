@@ -24,3 +24,25 @@ export const createList = (title: string, token: string) => {
     }
   };
 };
+
+export const reorderList = (columnOrder: string[], token: string) => {
+  return async (dispatch: Dispatch<Action>) => {
+    try {
+      dispatch({
+        type: ActionType.REORDER_LIST,
+        payload: columnOrder,
+      });
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/list/reorder`,
+        { columnOrder },
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

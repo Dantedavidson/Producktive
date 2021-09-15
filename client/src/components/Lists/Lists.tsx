@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks';
+import { useActions, useAppSelector } from '../../hooks';
 import styled from 'styled-components';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { List } from '..';
@@ -10,10 +10,29 @@ const Container = styled.div`
   align-items: flex-start;
 `;
 const Lists = ({}: ListsProps) => {
-  const data = useAppSelector(state => state.board);
-  const { columnOrder, columns, tasks } = data.board as Board;
-  const handleDragEnd = () => {
-    console.log('hello world');
+  const { board: boardState, user: userState } = useAppSelector(state => state);
+
+  const { reorderList } = useActions();
+  const { columnOrder, columns, tasks } = boardState.board as Board;
+  const handleDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId, type } = result;
+    console.log('This is a result', result);
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+    if (type === 'column') {
+      const newColumnOrder = Array.from(columnOrder);
+      newColumnOrder.splice(source.index, 1);
+      newColumnOrder.splice(destination.index, 0, draggableId);
+      reorderList(newColumnOrder, userState.token as string);
+      return;
+    }
   };
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -26,7 +45,7 @@ const Lists = ({}: ListsProps) => {
                 const colTasks = column.tasks.map(
                   (taskIds: string) => tasks[taskIds]
                 );
-                console.log(column, colTasks);
+
                 return (
                   <List
                     key={column.id}
