@@ -33,28 +33,6 @@ export const ListItemContainer = styled.div<{
   isDraggingOver: boolean;
 }>``;
 
-export const Modal = styled.div<{ $display: boolean }>`
-  && {
-    display: ${props => (props.$display ? '' : 'none')};
-    position: absolute;
-    top: 2.5rem;
-    background-color: white;
-    width: 17.8125rem;
-    padding: 0 0.5rem;
-    border: 1px solid rgba(173, 173, 173, 0.8);
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-
-    svg {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      cursor: pointer;
-      color: rgba(69, 68, 68, 0.8);
-      font-size: 1.2rem;
-    }
-  }
-`;
-
 export const Text = styled.p<{ $isTitle?: boolean }>`
   margin: 0.5rem 0;
   font-family: ${props => props.theme.fontMain};

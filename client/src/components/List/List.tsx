@@ -6,6 +6,7 @@ import { ListItem, AddButton } from '../index';
 import { Column } from '../../state';
 import { Task } from '../../state';
 import { useActions, useAppSelector } from '../../hooks';
+import Modal from '../Modal/Modal';
 
 interface ListProps {
   index: number;
@@ -29,15 +30,18 @@ const List = ({ index, column, tasks }: ListProps) => {
               <S.Title>{column.title}</S.Title>
               <MoreHoriz onClick={() => setModal(!modal)} />
             </S.Header>
-            <S.Modal $display={modal}>
-              <Close onClick={() => setModal(false)} />
+            <Modal
+              handler={setModal}
+              active={modal}
+              styles={{ corners: 'sharp', positionTop: 2.5, width: 17.8125 }}
+            >
               <S.Text $isTitle>List Actions</S.Text>
               <S.Text>Copy List</S.Text>
               <S.Text>Clear List</S.Text>
               <S.Text onClick={() => deleteList(column.id, token as string)}>
                 Delete List
               </S.Text>
-            </S.Modal>
+            </Modal>
             <Droppable droppableId={column.id} type='task'>
               {(provided, snapshot) => (
                 <S.ListItemContainer

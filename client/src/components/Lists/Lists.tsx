@@ -50,6 +50,7 @@ const Lists = ({}: ListsProps) => {
         tasks: newTasksIds,
       };
       updateList(newColumn, userState.token);
+      return;
     }
 
     const startTasksIds = Array.from(start.tasks);
