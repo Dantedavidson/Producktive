@@ -2,9 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import * as ListService from '../services/list';
 import * as BoardService from '../services/board';
 import * as ListItemService from '../services/listItem';
-import { BoardDocument } from '../models/board';
 import _ from 'lodash';
-import { validateColumn, validateColumnOrder } from '../models/board';
+import { validateColumn, validateColumnOrder, Column } from '../models/board';
 
 export const createList = async function (req: Request, res: Response) {
   try {
@@ -60,15 +59,29 @@ export const updateList = async function (req: Request, res: Response) {
     const { board: boardToken } = req.token;
     const board = await BoardService.find(boardToken);
     if (!board) throw 'Could not find board';
-    const list = await ListService.find(board, req.body.list.id);
-    if (!list) throw 'Error updating list';
-
     const update = await ListService.update(board, req.body.list);
-    console.log(update);
     return res.send({ update });
   } catch (err) {
     console.log(err);
     res.status(404).send(err);
+  }
+};
+export const updateMany = async function (req: Request, res: Response) {
+  try {
+    const { board: boardToken } = req.token;
+    const board = await BoardService.find(boardToken);
+    if (!board) throw 'Could not find board';
+    const updates = [];
+    for (const list of req.body.lists) {
+      const { error } = validateColumn(list);
+      if (error) throw error;
+      const update = await ListService.update(board, list);
+      updates.push(update);
+    }
+    return res.send({ updates });
+  } catch (err) {
+    console.log(err);
+    return res.status(404).send(err);
   }
 };
 

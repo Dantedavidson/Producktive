@@ -73,6 +73,19 @@ const reducer = (
         error: null,
         board: action.payload,
       };
+    case ActionType.MOVE_TASK:
+      return {
+        loading: false,
+        error: null,
+        board: {
+          ...board,
+          columns: {
+            ...board.columns,
+            [action.payload.to.id]: action.payload.to,
+            [action.payload.from.id]: action.payload.from,
+          },
+        },
+      };
     default:
       return state;
   }

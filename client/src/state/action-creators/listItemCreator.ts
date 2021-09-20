@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { Board, Column } from '..';
 import { ActionType } from '../action-types';
+import { ListAction } from '../actions/listActions';
 import { ListItemAction } from '../actions/listItemActions';
 
 export const createListItem = (
@@ -36,6 +37,24 @@ export const createListItem = (
   };
 };
 
-// export const reorderListItem = (list:Column,)=>{
-
-// }
+export const moveListItem = (from: Column, to: Column, token: string) => {
+  return async (dispatch: Dispatch<ListItemAction>) => {
+    try {
+      dispatch({
+        type: ActionType.MOVE_TASK,
+        payload: { from, to },
+      });
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/list/updateMany`,
+        { lists: [from, to] },
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};

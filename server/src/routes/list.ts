@@ -5,6 +5,7 @@ import {
   updateList,
   updateListOrder,
   getLists,
+  updateMany,
 } from '../controllers/list';
 import { auth } from '../middleware/auth';
 
@@ -13,6 +14,7 @@ router.get('/', auth, getLists);
 router.post('/', auth, createList);
 router.delete('/:id', auth, deleteList);
 router.post('/update', auth, updateList);
+router.post('/updateMany', auth, updateMany);
 router.post('/reorder', auth, updateListOrder);
 
 export default router;

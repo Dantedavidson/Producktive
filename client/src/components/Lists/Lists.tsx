@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 const Lists = ({}: ListsProps) => {
   const { board: boardState, user: userState } = useAppSelector(state => state);
-  const { updateList } = useActions();
+  const { updateList, moveListItem } = useActions();
 
   const { reorderList } = useActions();
   const { columnOrder, columns, tasks } = boardState.board as Board;
@@ -52,30 +52,19 @@ const Lists = ({}: ListsProps) => {
       updateList(newColumn, userState.token);
     }
 
-    // const startTasksIds = Array.from(start.taskIds);
-    // startTasksIds.splice(source.index, 1);
-    // const newStart = {
-    //   ...start,
-    //   taskIds: startTasksIds,
-    // };
-    // const finishTasksIds = Array.from(finish.taskIds);
-    // finishTasksIds.splice(destination.index, 0, draggableId);
-    // const newFinish = {
-    //   ...finish,
-    //   taskIds: finishTasksIds,
-    // };
-
-    // const newState = {
-    //   ...data,
-    //   columns: {
-    //     ...data.columns,
-    //     [newStart.id]: newStart,
-    //     [newFinish.id]: newFinish,
-    //   },
-    // };
-    // setData(newState);
-
-    console.log('I am a task', result);
+    const startTasksIds = Array.from(start.tasks);
+    startTasksIds.splice(source.index, 1);
+    const from = {
+      ...start,
+      tasks: startTasksIds,
+    };
+    const finishTasksIds = Array.from(finish.tasks);
+    finishTasksIds.splice(destination.index, 0, draggableId);
+    const to = {
+      ...finish,
+      tasks: finishTasksIds,
+    };
+    moveListItem(from, to, userState.token);
   };
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
