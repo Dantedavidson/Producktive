@@ -21,31 +21,40 @@ export interface BoardDetails {
 
 export interface BoardDocument extends mongoose.Document, BoardDetails {}
 
-const columnSchema = new mongoose.Schema({
-  id: { type: String },
-  title: { type: String },
-  tasks: { type: [String] },
-});
-
-const taskSchema = new mongoose.Schema({
-  id: { type: String },
-  title: { type: String },
-  content: { type: String },
-});
-
-const boardSchema = new mongoose.Schema({
-  tasks: {
-    type: Map,
-    of: taskSchema,
-    default: {},
+const columnSchema = new mongoose.Schema(
+  {
+    id: { type: String },
+    title: { type: String },
+    tasks: { type: [String] },
   },
-  columns: {
-    type: Map,
-    of: columnSchema,
-    default: {},
+  { _id: false }
+);
+
+const taskSchema = new mongoose.Schema(
+  {
+    id: { type: String },
+    title: { type: String },
+    content: { type: String },
   },
-  columnOrder: { type: [String] },
-});
+  { _id: false }
+);
+
+const boardSchema = new mongoose.Schema(
+  {
+    tasks: {
+      type: Map,
+      of: taskSchema,
+      default: {},
+    },
+    columns: {
+      type: Map,
+      of: columnSchema,
+      default: {},
+    },
+    columnOrder: { type: [String] },
+  },
+  { _id: false }
+);
 
 const columnValidationSchema = Joi.object({
   id: Joi.string(),

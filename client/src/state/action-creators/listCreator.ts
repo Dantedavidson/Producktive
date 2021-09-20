@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
+import { Column } from '..';
 import { ActionType } from '../action-types';
 import { ListAction } from '../actions/listActions';
 
@@ -58,6 +59,28 @@ export const reorderList = (columnOrder: string[], token: string) => {
       await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/list/reorder`,
         { columnOrder },
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateList = (list: Column, token: string) => {
+  return async (dispatch: Dispatch<ListAction>) => {
+    try {
+      dispatch({
+        type: ActionType.UPDATE_LIST,
+        payload: list,
+      });
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/list/update`,
+        { list },
         {
           headers: {
             'x-auth-token': token,

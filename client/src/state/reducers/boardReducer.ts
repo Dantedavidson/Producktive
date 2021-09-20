@@ -20,6 +20,7 @@ const reducer = (
   state: BoardState = initialBoardState,
   action: BoardAction | ListAction | ListItemAction
 ): BoardState => {
+  const board = state.board as Board;
   switch (action.type) {
     case ActionType.LOAD_BOARD:
       return { loading: true, error: null, board: null };
@@ -34,7 +35,7 @@ const reducer = (
         loading: false,
         error: null,
         board: {
-          ...(state.board as Board),
+          ...board,
           columns: {
             ...state.board?.columns,
             [`${action.payload.list.id}`]: action.payload.list,
@@ -48,11 +49,23 @@ const reducer = (
         error: null,
         board: action.payload,
       };
+    case ActionType.UPDATE_LIST:
+      return {
+        loading: false,
+        error: null,
+        board: {
+          ...board,
+          columns: {
+            ...board.columns,
+            [action.payload.id]: action.payload,
+          },
+        },
+      };
     case ActionType.REORDER_LIST:
       return {
         loading: false,
         error: null,
-        board: { ...(state.board as Board), columnOrder: action.payload },
+        board: { ...board, columnOrder: action.payload },
       };
     case ActionType.CREATE_TASK:
       return {

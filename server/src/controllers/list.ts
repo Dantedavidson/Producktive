@@ -55,18 +55,19 @@ export const deleteList = async function (req: Request, res: Response) {
 
 export const updateList = async function (req: Request, res: Response) {
   try {
-    const { error } = validateColumn(req.body);
+    const { error } = validateColumn(req.body.list);
     if (error) throw error;
     const { board: boardToken } = req.token;
     const board = await BoardService.find(boardToken);
     if (!board) throw 'Could not find board';
-    const list = await ListService.find(board, req.body.id);
+    const list = await ListService.find(board, req.body.list.id);
     if (!list) throw 'Error updating list';
 
-    const update = await ListService.update(board, list);
-
+    const update = await ListService.update(board, req.body.list);
+    console.log(update);
     return res.send({ update });
   } catch (err) {
+    console.log(err);
     res.status(404).send(err);
   }
 };

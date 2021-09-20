@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { Board } from '..';
+import { Board, Column } from '..';
 import { ActionType } from '../action-types';
 import { ListItemAction } from '../actions/listItemActions';
 
@@ -35,3 +35,7 @@ export const createListItem = (
     }
   };
 };
+
+// export const reorderListItem = (list:Column,)=>{
+
+// }

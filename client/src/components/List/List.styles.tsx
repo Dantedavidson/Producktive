@@ -37,6 +37,7 @@ export const Modal = styled.div<{ $display: boolean }>`
   && {
     display: ${props => (props.$display ? '' : 'none')};
     position: absolute;
+    top: 2.5rem;
     background-color: white;
     width: 17.8125rem;
     padding: 0 0.5rem;

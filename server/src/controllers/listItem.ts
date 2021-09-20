@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { BoardDocument, validateTask } from '../models/board';
+import { BoardDocument, validateTask, validateColumn } from '../models/board';
 import * as BoardService from '../services/board';
 import * as ListService from '../services/list';
 import * as ListItemService from '../services/listItem';
@@ -55,20 +55,22 @@ export const updateTask = async function (req: Request, res: Response) {
   }
 };
 
-export const reorderTask = async function (req: Request, res: Response) {
-  try {
-    const { board: boardToken } = req.token;
-    const board = await BoardService.find(boardToken);
-    if (!board) throw 'Error board does not exist';
-    const update = await ListService.find(board, req.body.from);
-    if (!update) throw 'Error could not find list';
+// export const reorderTask = async function (req: Request, res: Response) {
+//   try {
+//     const { error } = validateColumn(req.body);
+//     if (error) throw error;
+//     const { board: boardToken } = req.token;
+//     const board = await BoardService.find(boardToken);
+//     if (!board) throw 'Error board does not exist';
+//     const update = await ListService.find(board, req.body.id);
+//     if (!update) throw 'Error could not find list';
 
-    await ListService.update(board, update);
-    return res.send('Reorder success');
-  } catch (err) {
-    return res.status(400).send('Could not reorder items');
-  }
-};
+//     await ListService.update(board, req.body);
+//     return res.send('Reorder success');
+//   } catch (err) {
+//     return res.status(400).send('Could not reorder items');
+//   }
+// };
 
 export const moveTask = async function (req: Request, res: Response) {
   try {
