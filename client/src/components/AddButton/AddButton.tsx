@@ -6,6 +6,7 @@ import { useActions, useAppSelector } from '../../hooks';
 
 interface AddButtonProps {
   btnType: 'list' | 'item';
+  listId?: string;
 }
 
 const useOutsideClick = (
@@ -25,18 +26,27 @@ const useOutsideClick = (
   }, [ref]);
 };
 
-const AddButton = ({ btnType }: AddButtonProps) => {
+const AddButton = ({ btnType, listId }: AddButtonProps) => {
   const [active, setActive] = useState(false);
   const [input, setInput] = useState('');
-  const { createList } = useActions();
+  const { createList, createListItem } = useActions();
   const { token } = useAppSelector(state => state.user);
   const ref = useRef<any>(null);
+
   useOutsideClick(ref, setActive);
+
   const handleList = () => {
     if (!token || !input) return;
     setInput('');
     setActive(false);
     createList(input, token);
+  };
+
+  const handleItem = () => {
+    if (!token || !input || !listId) return;
+    setInput('');
+    setActive(false);
+    createListItem(listId, input, token);
   };
   if (btnType === 'list')
     return (
@@ -54,7 +64,14 @@ const AddButton = ({ btnType }: AddButtonProps) => {
               >
                 Add List
               </Button>
-              <CloseRounded style={{ fontSize: 30, cursor: 'pointer' }} />
+              <CloseRounded
+                style={{ fontSize: 30, cursor: 'pointer' }}
+                onClick={e => {
+                  e.stopPropagation();
+                  setInput('');
+                  setActive(false);
+                }}
+              />
             </S.Row>
           </>
         ) : (
@@ -68,10 +85,35 @@ const AddButton = ({ btnType }: AddButtonProps) => {
     );
   else
     return (
-      <S.ItemButton active={active}>
-        <S.Wrap>
-          <AddRounded /> New Item
-        </S.Wrap>
+      <S.ItemButton ref={ref} active={active} onClick={() => setActive(true)}>
+        {active ? (
+          <>
+            <S.Input onChange={e => setInput(e.target.value)} value={input} />
+            <S.Row>
+              <Button
+                variant='contained'
+                color='primary'
+                size='small'
+                style={{ height: 30 }}
+                onClick={handleItem}
+              >
+                Add Item
+              </Button>
+              <CloseRounded
+                style={{ fontSize: 30, cursor: 'pointer' }}
+                onClick={e => {
+                  e.stopPropagation();
+                  setInput('');
+                  setActive(false);
+                }}
+              />
+            </S.Row>
+          </>
+        ) : (
+          <S.Wrap>
+            <AddRounded /> New Item
+          </S.Wrap>
+        )}
       </S.ItemButton>
     );
 };

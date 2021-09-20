@@ -52,7 +52,7 @@ const List = ({ index, column, tasks }: ListProps) => {
                 </S.ListItemContainer>
               )}
             </Droppable>
-            <AddButton btnType='item' />
+            <AddButton btnType='item' listId={column.id} />
           </S.List>
         );
       }}

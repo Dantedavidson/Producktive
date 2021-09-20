@@ -15,9 +15,9 @@ export const createTask = async function (req: Request, res: Response) {
     if (!list) throw 'Error creating task';
 
     const task = ListItemService.create(req.body.title);
-    const updateList = await ListItemService.addToList(board, list, task.id);
+    await ListItemService.addToList(board, list, task.id);
     const updateTasks = await ListItemService.addToTasks(board, task);
-    return res.send({ updateList, updateTasks });
+    return res.send(updateTasks);
   } catch (err) {
     return res.send(err);
   }

@@ -11,4 +11,12 @@ export const Container = styled.div<Props>`
   margin-bottom: 0.5rem;
   font-family: ${props => props.theme.fontMain};
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  word-wrap: break-word;
+`;
+export const Wrapper = styled.div``;
+export const Title = styled.p`
+  max-width: 15rem;
 `;

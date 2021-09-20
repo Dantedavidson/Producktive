@@ -14,16 +14,19 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  width: 100%;
+  word-wrap: break-word;
   svg {
-    align-self: center;
+    align-self: start;
     cursor: pointer;
   }
 `;
 
-export const Title = styled.div`
+export const Title = styled.h1`
   font-family: ${props => props.theme.fontMain};
   font-weight: 800;
   font-size: 1.5rem;
+  max-width: 15rem;
 `;
 
 export const ListItemContainer = styled.div<{

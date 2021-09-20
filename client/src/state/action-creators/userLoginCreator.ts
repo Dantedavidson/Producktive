@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
-import { Action as UserAction } from '../actions/userActions';
-import { Action as BoardAction } from '../actions/boardActions';
+import { UserAction } from '../actions/userActions';
+import { BoardAction } from '../actions/boardActions';
 
 interface UserDetails {
   username: string;

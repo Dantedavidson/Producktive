@@ -57,6 +57,7 @@ export const Input = styled(TextareaAutosize)`
     }
   }
 `;
+
 export const Wrap = styled.div`
   display: flex;
   align-items: center;

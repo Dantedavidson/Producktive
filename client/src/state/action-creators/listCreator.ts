@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
-import { Action } from '../actions/listActions';
-import { Board } from '../types';
+import { ListAction } from '../actions/listActions';
 
 export const createList = (title: string, token: string) => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<ListAction>) => {
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/list`,
@@ -27,7 +26,7 @@ export const createList = (title: string, token: string) => {
 };
 
 export const deleteList = (listId: string, token: string) => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<ListAction>) => {
     try {
       const { data } = await axios.delete(
         `${process.env.REACT_APP_SERVER_URL}/list/${listId}`,
@@ -50,7 +49,7 @@ export const deleteList = (listId: string, token: string) => {
 };
 
 export const reorderList = (columnOrder: string[], token: string) => {
-  return async (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<ListAction>) => {
     try {
       dispatch({
         type: ActionType.REORDER_LIST,

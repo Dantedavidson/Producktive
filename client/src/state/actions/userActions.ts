@@ -26,7 +26,7 @@ interface LogoutUserAction {
   type: ActionType.LOGOUT_USER;
 }
 
-export type Action =
+export type UserAction =
   | CreateUserAction
   | CreateUserSuccessAction
   | CreateUserErrorAction

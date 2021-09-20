@@ -19,7 +19,7 @@ interface ClearBoardAction {
   type: ActionType.CLEAR_BOARD;
 }
 
-export type Action =
+export type BoardAction =
   | LoadBoardAction
   | LoadBoardSuccessAction
   | LoadBoardErrorAction

@@ -1,4 +1,4 @@
-import { Action } from '../actions/userActions';
+import { UserAction } from '../actions/userActions';
 import { ActionType } from '../action-types';
 
 interface UserState {
@@ -6,15 +6,15 @@ interface UserState {
   error: string | null;
   token: string | null;
 }
-const initialState = {
+export const initialUserState = {
   loading: false,
   error: null,
   token: null,
 };
 
 const reducer = (
-  state: UserState = initialState,
-  action: Action
+  state: UserState = initialUserState,
+  action: UserAction
 ): UserState => {
   switch (action.type) {
     case ActionType.CREATE_USER:
@@ -31,7 +31,7 @@ const reducer = (
     case ActionType.LOGIN_USER_ERROR:
       return { loading: false, error: action.payload, token: null };
     case ActionType.LOGOUT_USER:
-      return initialState;
+      return initialUserState;
 
     default:
       return state;

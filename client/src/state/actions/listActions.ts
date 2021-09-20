@@ -21,7 +21,7 @@ interface ReorderListAction {
   payload: string[];
 }
 
-export type Action =
+export type ListAction =
   | CreateListAction
   | UpdateListAction
   | DeleteListAction
