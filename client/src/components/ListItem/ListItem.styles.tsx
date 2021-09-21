@@ -23,6 +23,16 @@ export const Wrapper = styled.div`
     cursor: pointer;
   }
 `;
+export const ModalBg = styled.div<{ $active: boolean }>`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 4;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  display: ${props => (props.$active ? '' : 'none')};
+`;
 export const Title = styled.p`
   width: 15rem;
 `;

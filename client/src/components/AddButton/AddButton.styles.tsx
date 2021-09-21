@@ -44,27 +44,7 @@ export const ItemButton = styled(Button)`
   }
 `;
 
-export const Input = styled(TextareaAutosize)`
-  && {
-    width: 100%;
-    padding: 0.2rem;
-    margin-bottom: 0.5rem;
-    font-family: ${props => props.theme.fontMain};
-    font-size: 1.5rem;
-
-    :focus-visible {
-      outline: none;
-    }
-  }
-`;
-
 export const Wrap = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 7.5rem;
 `;

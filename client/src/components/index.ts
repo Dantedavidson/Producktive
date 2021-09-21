@@ -7,3 +7,4 @@ export { default as List } from './List/List';
 export { default as Modal } from './Modal/Modal';
 export { ListItem } from './ListItem/ListItem';
 export { default as AddButton } from './AddButton/AddButton';
+export { default as EditInput } from './EditInput/EditInput';

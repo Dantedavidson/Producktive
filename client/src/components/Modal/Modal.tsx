@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useOutsideClick } from '../../hooks';
 import { Close } from '@material-ui/icons';
 import Styled from 'styled-components';
 
 type Styles = {
   corners: 'sharp' | 'rounded';
   width: number;
+  position: 'fixed' | 'absolute';
   positionTop: number;
 };
 
@@ -18,16 +20,19 @@ interface Props {
 const StyledModal = Styled.div<{ $display: boolean; $styles: Styles }>`
 && {
   display: ${props => (props.$display ? '' : 'none')};
-  position: absolute;
+  position: ${props => props.$styles.position};
   top: ${props => `${props.$styles.positionTop}rem`};
-  left:0;
+  left:${props => (props.$styles.position === 'fixed' ? '50%' : '')};
+  transform:${props =>
+    props.$styles.position === 'fixed' ? 'translateX(-50%)' : ''};
   background-color: white;
   width: ${props => `${props.$styles.width}rem`};
+  max-width: 90vw;
   padding: 0 0.5rem;
   border: 1px solid rgba(173, 173, 173, 0.8);
   border-radius:${props => props.$styles.corners === 'rounded' && '5px'};
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  z-index:2;
+  z-index:5;
 
   svg {
     position: absolute;
@@ -41,8 +46,10 @@ const StyledModal = Styled.div<{ $display: boolean; $styles: Styles }>`
 `;
 
 const Modal = ({ children, active, handler, styles }: Props) => {
+  const ref = useRef<any>(null);
+  useOutsideClick(ref, handler);
   return (
-    <StyledModal $display={active} $styles={styles}>
+    <StyledModal ref={ref} $display={active} $styles={styles}>
       <Close onClick={() => handler(false)} />
       {children}
     </StyledModal>
