@@ -33,8 +33,22 @@ export const ModalBg = styled.div<{ $active: boolean }>`
   left: 0;
   display: ${props => (props.$active ? '' : 'none')};
 `;
+export const Wrap = styled.div`
+  margin: 1rem 0;
+`;
+export const Row = styled.div`
+  display: flex;
+  align-items: center;
+`;
 export const Title = styled.p`
   width: 15rem;
+`;
+export const ModalTitle = styled.h2`
+  font-size: 1.2rem;
+`;
+export const SmallText = styled.p`
+  font-size: 0.8rem;
+  font-weight: 800;
 `;
 export const Text = styled.p``;
 

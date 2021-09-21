@@ -6,8 +6,17 @@ interface createListItemAction {
   payload: Board;
 }
 
+interface updateListItemAction {
+  type: ActionType.UPDATE_TASK;
+  payload: Task;
+}
+
 interface moveListItemAction {
   type: ActionType.MOVE_TASK;
   payload: { from: Column; to: Column };
 }
-export type ListItemAction = createListItemAction | moveListItemAction;
+
+export type ListItemAction =
+  | createListItemAction
+  | moveListItemAction
+  | updateListItemAction;

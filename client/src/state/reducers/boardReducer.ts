@@ -73,6 +73,15 @@ const reducer = (
         error: null,
         board: action.payload,
       };
+    case ActionType.UPDATE_TASK:
+      return {
+        loading: false,
+        error: null,
+        board: {
+          ...board,
+          tasks: { ...board.tasks, [action.payload.id]: action.payload },
+        },
+      };
     case ActionType.MOVE_TASK:
       return {
         loading: false,

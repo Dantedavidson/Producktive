@@ -7,7 +7,8 @@ export const Input = styled(TextareaAutosize)`
     padding: 0.2rem;
     margin-bottom: 0.5rem;
     font-family: ${props => props.theme.fontMain};
-    font-size: 1.5rem;
+    font-size: inherit;
+    color: rgb(69, 68, 68);
 
     :focus-visible {
       outline: none;
@@ -16,6 +17,5 @@ export const Input = styled(TextareaAutosize)`
 `;
 export const Row = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 7.5rem;
+  color: rgba(69, 68, 68, 0.6);
 `;

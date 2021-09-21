@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useOutsideClick } from '../../hooks';
-import { Close } from '@material-ui/icons';
+import { Close as _Close } from '@material-ui/icons';
 import Styled from 'styled-components';
 
 type Styles = {
@@ -34,16 +34,17 @@ const StyledModal = Styled.div<{ $display: boolean; $styles: Styles }>`
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   z-index:5;
 
-  svg {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    cursor: pointer;
-    color: rgba(69, 68, 68, 0.8);
-    font-size: 1.2rem;
-  }
 }
 `;
+
+const Close = Styled(_Close)`
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  cursor: pointer;
+  color: rgba(69, 68, 68, 0.8);
+  font-size: 1.2rem;
+  `;
 
 const Modal = ({ children, active, handler, styles }: Props) => {
   const ref = useRef<any>(null);

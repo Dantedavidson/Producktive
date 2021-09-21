@@ -1,8 +1,11 @@
 import * as S from './EditInput.styles';
 import { Button } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
+import { useEffect } from 'react';
+import { string } from 'yup/lib/locale';
 interface Props {
   input: string;
+  initial?: string;
   buttonText: string;
   inputHandler: React.Dispatch<React.SetStateAction<string>>;
   activeHandler: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +15,7 @@ interface Props {
 const EditInput = ({
   input,
   buttonText,
+  initial,
   inputHandler,
   buttonHandler,
   activeHandler,
@@ -30,10 +34,10 @@ const EditInput = ({
           {buttonText}
         </Button>
         <CloseRounded
-          style={{ fontSize: 30, cursor: 'pointer' }}
+          style={{ fontSize: 30, cursor: 'pointer', marginLeft: 5 }}
           onClick={e => {
             e.stopPropagation();
-            inputHandler('');
+            inputHandler(initial ? initial : '');
             activeHandler(false);
           }}
         />

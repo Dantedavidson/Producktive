@@ -79,37 +79,3 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
     );
 };
 export default AddButton;
-
-// else
-// return (
-//   <S.ItemButton ref={ref} active={active} onClick={() => setActive(true)}>
-//     {active ? (
-//       <>
-//         <S.Input onChange={e => setInput(e.target.value)} value={input} />
-//         <S.Row>
-//           <Button
-//             variant='contained'
-//             color='primary'
-//             size='small'
-//             style={{ height: 30 }}
-//             onClick={handleItem}
-//           >
-//             Add Item
-//           </Button>
-//           <CloseRounded
-//             style={{ fontSize: 30, cursor: 'pointer' }}
-//             onClick={e => {
-//               e.stopPropagation();
-//               setInput('');
-//               setActive(false);
-//             }}
-//           />
-//         </S.Row>
-//       </>
-//     ) : (
-//       <S.Wrap>
-//         <AddRounded /> New Item
-//       </S.Wrap>
-//     )}
-//   </S.ItemButton>
-// );

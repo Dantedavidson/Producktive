@@ -57,7 +57,12 @@ const List = ({ index, column, tasks }: ListProps) => {
                     isDraggingOver={snapshot.isDraggingOver}
                   >
                     {tasks.map((task, index) => (
-                      <ListItem key={task.id} task={task} index={index} />
+                      <ListItem
+                        key={task.id}
+                        task={task}
+                        index={index}
+                        parentTitle={column.title}
+                      />
                     ))}
                     {provided.placeholder}
                   </S.ListItemContainer>
