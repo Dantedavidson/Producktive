@@ -11,6 +11,7 @@ export type Task = {
   id: string;
   title: string;
   content: string;
+  status: boolean;
 };
 
 export interface BoardDetails {
@@ -35,26 +36,24 @@ const taskSchema = new mongoose.Schema(
     id: { type: String },
     title: { type: String },
     content: { type: String },
+    status: { type: Boolean },
   },
   { _id: false }
 );
 
-const boardSchema = new mongoose.Schema(
-  {
-    tasks: {
-      type: Map,
-      of: taskSchema,
-      default: {},
-    },
-    columns: {
-      type: Map,
-      of: columnSchema,
-      default: {},
-    },
-    columnOrder: { type: [String] },
+const boardSchema = new mongoose.Schema({
+  tasks: {
+    type: Map,
+    of: taskSchema,
+    default: {},
   },
-  { _id: false }
-);
+  columns: {
+    type: Map,
+    of: columnSchema,
+    default: {},
+  },
+  columnOrder: { type: [String] },
+});
 
 const columnValidationSchema = Joi.object({
   id: Joi.string(),
@@ -69,7 +68,8 @@ export const validateColumn = (column: any) => {
 const taskValidationSchema = Joi.object({
   id: Joi.string(),
   title: Joi.string().required(),
-  content: Joi.string(),
+  content: Joi.string().allow(''),
+  status: Joi.boolean(),
 });
 export const validateTask = (task: any) => taskValidationSchema.validate(task);
 

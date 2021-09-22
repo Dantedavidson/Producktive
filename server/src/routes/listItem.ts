@@ -4,6 +4,7 @@ import {
   deleteTask,
   updateTask,
   moveTask,
+  deleteAllTasks,
   // reorderTask,
 } from '../controllers/listItem';
 import { auth } from '../middleware/auth';
@@ -11,8 +12,8 @@ import { auth } from '../middleware/auth';
 const router = express.Router();
 
 router.post('/', auth, createTask);
-router.post('/delete', auth, deleteTask);
+router.delete('/delete', auth, deleteTask);
 router.post('/update', auth, updateTask);
-// router.post('/reorder', auth, reorderTask);
+router.delete('/deleteAll', auth, deleteAllTasks);
 router.post('/move', auth, moveTask);
 export default router;

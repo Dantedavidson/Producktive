@@ -40,6 +40,7 @@ export async function update(board: BoardDocument, list: Column) {
   console.log('this is the board');
   return board.save();
 }
+
 export async function reorder(board: BoardDocument, columnOrder: string[]) {
   board.columnOrder = columnOrder;
   return board.save();

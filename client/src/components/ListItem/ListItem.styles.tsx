@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Edit as _Edit } from '@material-ui/icons';
+import { CheckCircleOutline, RadioButtonUnchecked } from '@material-ui/icons';
 
 interface Props {
   isDragging: boolean;
@@ -18,7 +19,10 @@ export const Container = styled.div<Props>`
   align-items: start;
   word-wrap: break-word;
 `;
-export const Wrapper = styled.div`
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 2.5625rem;
   svg {
     cursor: pointer;
   }
@@ -40,21 +44,45 @@ export const Row = styled.div`
   display: flex;
   align-items: center;
 `;
-export const Title = styled.p`
-  width: 15rem;
+export const Title = styled.p<{ status: boolean }>`
+  text-decoration: ${props => props.status && 'line-through'};
+  color: ${props => props.status && 'grey'};
+  max-width: 14rem;
 `;
 export const ModalTitle = styled.h2`
   font-size: 1.2rem;
+  max-width: 95%;
 `;
 export const SmallText = styled.p`
   font-size: 0.8rem;
   font-weight: 800;
+  color: rgba(69, 68, 68, 0.6);
 `;
 export const Text = styled.p``;
 
 export const Edit = styled(_Edit)`
   && {
     font-size: 1rem;
-    color: grey;
+    color: rgba(69, 68, 68, 0.6);
+
+    &:hover {
+      color: rgba(69, 68, 68, 0.8);
+    }
+  }
+`;
+
+export const Complete = styled(CheckCircleOutline)`
+  && {
+    color: green;
+  }
+`;
+
+export const Incomplete = styled(RadioButtonUnchecked)`
+  && {
+    color: rgba(69, 68, 68, 0.6);
+
+    &:hover {
+      color: rgba(69, 68, 68, 0.8);
+    }
   }
 `;

@@ -8,6 +8,7 @@ export function create(title: string = '') {
     id,
     title,
     content: '',
+    status: false,
   };
   return task;
 }
@@ -32,7 +33,9 @@ export async function removeFromList(
   list: Column,
   taskId: string
 ) {
-  const tasks = list.tasks.filter(task => task !== taskId);
+  const tasks = list.tasks.filter(task => {
+    return task !== taskId;
+  });
   board.columns.set(`${list.id}`, { id: list.id, title: list.title, tasks });
   return board.save();
 }
@@ -41,11 +44,13 @@ export async function removeFromTasks(board: BoardDocument, taskId: string) {
   board.tasks.delete(taskId);
   return board.save();
 }
+
 export async function update(board: BoardDocument, task: Task) {
   board.tasks.set(`${task.id}`, {
     id: task.id,
     title: task.title,
     content: task.content,
+    status: task.status,
   });
   return board.save();
 }

@@ -2,6 +2,7 @@ export type Task = {
   id: string;
   title: string;
   content: string;
+  status: boolean;
 };
 
 export type Column = {

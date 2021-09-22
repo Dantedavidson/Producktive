@@ -1,3 +1,4 @@
+import { Action } from 'redux';
 import { ActionType } from '../action-types';
 import { Board, Column, Task } from '../types';
 
@@ -16,7 +17,13 @@ interface moveListItemAction {
   payload: { from: Column; to: Column };
 }
 
+interface deleteListItemAction {
+  type: ActionType.DELETE_TASK;
+  payload: Board;
+}
+
 export type ListItemAction =
   | createListItemAction
   | moveListItemAction
+  | deleteListItemAction
   | updateListItemAction;

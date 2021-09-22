@@ -61,7 +61,7 @@ const List = ({ index, column, tasks }: ListProps) => {
                         key={task.id}
                         task={task}
                         index={index}
-                        parentTitle={column.title}
+                        list={column}
                       />
                     ))}
                     {provided.placeholder}

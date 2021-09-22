@@ -47,7 +47,6 @@ export const deleteList = async function (req: Request, res: Response) {
     const update = await ListService.remove(board, req.params.id);
     return res.send(update);
   } catch (err) {
-    console.log(err);
     return res.send(err);
   }
 };
@@ -66,6 +65,7 @@ export const updateList = async function (req: Request, res: Response) {
     res.status(404).send(err);
   }
 };
+
 export const updateMany = async function (req: Request, res: Response) {
   try {
     const { board: boardToken } = req.token;

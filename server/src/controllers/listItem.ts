@@ -33,7 +33,7 @@ export const deleteTask = async function (req: Request, res: Response) {
 
     await ListItemService.removeFromList(board, list, req.body.taskId);
     await ListItemService.removeFromTasks(board, req.body.taskId);
-    return res.send('Delete success');
+    return res.send(board);
   } catch (err) {
     console.log(err);
     return res.status(400).send('Delete failure');
@@ -42,6 +42,7 @@ export const deleteTask = async function (req: Request, res: Response) {
 
 export const updateTask = async function (req: Request, res: Response) {
   try {
+    console.log(req.body);
     const { error } = validateTask(req.body);
     const { board: boardToken } = req.token;
     if (error) throw error;
@@ -51,26 +52,10 @@ export const updateTask = async function (req: Request, res: Response) {
     await ListItemService.update(board, req.body);
     return res.send('update success');
   } catch (err) {
+    console.log(err);
     return res.status(400).send(err);
   }
 };
-
-// export const reorderTask = async function (req: Request, res: Response) {
-//   try {
-//     const { error } = validateColumn(req.body);
-//     if (error) throw error;
-//     const { board: boardToken } = req.token;
-//     const board = await BoardService.find(boardToken);
-//     if (!board) throw 'Error board does not exist';
-//     const update = await ListService.find(board, req.body.id);
-//     if (!update) throw 'Error could not find list';
-
-//     await ListService.update(board, req.body);
-//     return res.send('Reorder success');
-//   } catch (err) {
-//     return res.status(400).send('Could not reorder items');
-//   }
-// };
 
 export const moveTask = async function (req: Request, res: Response) {
   try {
@@ -87,5 +72,31 @@ export const moveTask = async function (req: Request, res: Response) {
   } catch (err) {
     console.log(err);
     return res.status(400).send('Move failure');
+  }
+};
+
+export const deleteAllTasks = async function (req: Request, res: Response) {
+  try {
+    const { board: boardToken } = req.token;
+    const board = await BoardService.find(boardToken);
+    if (!board) throw 'Error board does not exist';
+    for (const i in board.columnOrder) {
+      const oldList = await ListService.find(board, board.columnOrder[i]);
+      if (!oldList) throw 'Error deleting tasks';
+      for (const j in oldList.tasks) {
+        const updatedList = await ListService.find(board, board.columnOrder[i]);
+        if (!updatedList) throw 'Error finding list';
+        await ListItemService.removeFromList(
+          board,
+          updatedList,
+          oldList.tasks[j]
+        );
+        await ListItemService.removeFromTasks(board, oldList.tasks[j]);
+      }
+    }
+    return res.send(board);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send('Delete failure');
   }
 };

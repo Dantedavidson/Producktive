@@ -15,6 +15,7 @@ export async function find(id: string) {
 export async function remove(id: string) {
   return Board.deleteOne({ id: id });
 }
+
 export async function removeAll() {
   return Board.deleteMany();
 }

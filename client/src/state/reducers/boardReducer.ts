@@ -82,6 +82,12 @@ const reducer = (
           tasks: { ...board.tasks, [action.payload.id]: action.payload },
         },
       };
+    case ActionType.DELETE_TASK:
+      return {
+        loading: false,
+        error: null,
+        board: action.payload,
+      };
     case ActionType.MOVE_TASK:
       return {
         loading: false,

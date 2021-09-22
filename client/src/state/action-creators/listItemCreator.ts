@@ -38,7 +38,6 @@ export const createListItem = (
 };
 export const updateListItem = (item: Task, token: string) => {
   return async (dispatch: Dispatch<ListItemAction>) => {
-    const { id, title, content } = item;
     try {
       dispatch({
         type: ActionType.UPDATE_TASK,
@@ -46,13 +45,38 @@ export const updateListItem = (item: Task, token: string) => {
       });
       await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/listItem/update`,
-        { id, title, content },
+        { ...item },
         {
           headers: {
             'x-auth-token': token,
           },
         }
       );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+export const deleteListItem = (
+  taskId: string,
+  listId: string,
+  token: string
+) => {
+  return async (dispatch: Dispatch<ListItemAction>) => {
+    try {
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/listItem/delete`,
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+          data: {
+            taskId,
+            listId,
+          },
+        }
+      );
+      dispatch({ type: ActionType.DELETE_TASK, payload: data });
     } catch (err) {
       console.log(err);
     }
