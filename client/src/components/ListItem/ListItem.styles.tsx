@@ -15,6 +15,7 @@ export const Container = styled.div<Props>`
   font-family: ${props => props.theme.fontMain};
   font-size: 1rem;
   display: flex;
+  min-height: 20px;
   justify-content: space-between;
   align-items: start;
   word-wrap: break-word;
@@ -43,11 +44,13 @@ export const Wrap = styled.div`
 export const Row = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
 `;
 export const Title = styled.p<{ status: boolean }>`
   text-decoration: ${props => props.status && 'line-through'};
   color: ${props => props.status && 'grey'};
   max-width: 14rem;
+  flex-grow: 1;
 `;
 export const ModalTitle = styled.h2`
   font-size: 1.2rem;
@@ -58,7 +61,15 @@ export const SmallText = styled.p`
   font-weight: 800;
   color: rgba(69, 68, 68, 0.6);
 `;
-export const Text = styled.p``;
+export const Text = styled.p<{ $content?: string }>`
+  background-color: ${props => !props.$content && '#091e420a'};
+  font-size: 0.875rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  &:hover {
+    background-color: ${props => !props.$content && '#091e4214'};
+  }
+`;
 
 export const Edit = styled(_Edit)`
   && {

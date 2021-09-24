@@ -22,6 +22,7 @@ export const ListButton = styled(Button)`
     background-color: ${({ active }) =>
       active ? 'rgba(196, 196, 196, 0.5)' : 'rgba(196, 196, 196, 0.25)'};
     font-size: 1.5rem;
+
     min-width: 18.75rem;
     padding: 0.5rem;
     svg {
@@ -35,7 +36,7 @@ export const ListButton = styled(Button)`
 
 export const ItemButton = styled(Button)`
   background-color: ${({ active }) =>
-    active ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.4)'};
+    active ? 'rgba(245, 245, 245, 0.6)' : 'rgba(245, 245, 245, 0.4)'};
   font-size: 1rem;
   width: 100%;
   padding: 0.3rem;

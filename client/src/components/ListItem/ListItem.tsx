@@ -21,7 +21,7 @@ export const ListItem = ({
   const { updateListItem, deleteListItem } = useActions();
   const handleContent = () => {
     console.log(content);
-    if (!token || !content) return;
+    if (!token) return;
     const updateTask = { ...task, content: content };
     updateListItem(updateTask, token);
     setEditDesc(false);
@@ -79,21 +79,29 @@ export const ListItem = ({
                 corners: 'rounded',
                 position: 'fixed',
                 positionTop: 6,
+                height: 60,
+                color: 'grey',
                 width: 40,
               }}
             >
               <S.Wrap>
-                <S.ModalTitle>{task.title}</S.ModalTitle>
+                <S.Row>
+                  <S.ModalTitle style={{ cursor: 'pointer' }}>
+                    {task.title}
+                  </S.ModalTitle>
+                </S.Row>
                 <S.SmallText>Item in {list.title}</S.SmallText>
               </S.Wrap>
               <S.Wrap key={`${task.id}-inputs`}>
                 <S.Row>
                   <S.ModalTitle>Description</S.ModalTitle>
-                  <S.Edit
-                    onClick={() => setEditDesc(!editDesc)}
-                    fontSize='small'
-                    style={{ marginLeft: 15, cursor: 'pointer' }}
-                  />
+                  {!editDesc && (
+                    <S.Edit
+                      onClick={() => setEditDesc(!editDesc)}
+                      fontSize='small'
+                      style={{ marginLeft: 15, cursor: 'pointer' }}
+                    />
+                  )}
                 </S.Row>
                 {editDesc ? (
                   <EditInput
@@ -105,7 +113,16 @@ export const ListItem = ({
                     initial={task.content}
                   />
                 ) : (
-                  <S.Text>{task.content}</S.Text>
+                  <S.Text
+                    $content={task.content}
+                    onClick={() => {
+                      setEditDesc(true);
+                    }}
+                  >
+                    {task.content
+                      ? task.content
+                      : 'Add a more detailed description...'}
+                  </S.Text>
                 )}
 
                 <button onClick={handleDelete}>delete me</button>

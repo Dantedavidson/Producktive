@@ -37,7 +37,6 @@ export const deleteList = (listId: string, token: string) => {
           },
         }
       );
-
       const newState = {
         id: data._id,
         tasks: data.tasks,

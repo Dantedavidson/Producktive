@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 
 export const Container = styled.div`
   border: 1px solid grey;
+  background-color: white;
   border-radius: 5px;
   max-width: 23rem;
   margin: 10vh auto 0 auto;

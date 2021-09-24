@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useActions, useAppSelector } from '../../hooks';
-import styled from 'styled-components';
+import * as S from './Lists.styles';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { List } from '..';
 import { Board } from '../../state';
 interface ListsProps {}
-const Container = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;
+
 const Lists = ({}: ListsProps) => {
   const { board: boardState, user: userState } = useAppSelector(state => state);
   const { updateList, moveListItem } = useActions();
@@ -72,7 +69,7 @@ const Lists = ({}: ListsProps) => {
       <Droppable droppableId='all-columns' direction='horizontal' type='column'>
         {provided => {
           return (
-            <Container {...provided.droppableProps} ref={provided.innerRef}>
+            <S.Container {...provided.droppableProps} ref={provided.innerRef}>
               {columnOrder.map((col, index) => {
                 const column = columns[col];
                 const colTasks = column.tasks.map(
@@ -89,7 +86,7 @@ const Lists = ({}: ListsProps) => {
                 );
               })}
               {provided.placeholder}
-            </Container>
+            </S.Container>
           );
         }}
       </Droppable>
