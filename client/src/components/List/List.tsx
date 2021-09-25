@@ -1,11 +1,13 @@
 import * as S from './List.styles';
 import { useState, useEffect, useRef } from 'react';
+import { Container, Draggable, DropResult } from 'react-smooth-dnd';
 import { Close, MoreHoriz } from '@material-ui/icons';
 import { ListItem, AddButton } from '../index';
-import { Column } from '../../state';
-import { Task } from '../../state';
+import { Column, Task } from '../../state';
+import { applyDrag } from '../../utility';
 import { useActions, useAppSelector, useOutsideClick } from '../../hooks';
 import Modal from '../Modal/Modal';
+import { userInfo } from 'os';
 
 interface ListProps {
   index: number;
@@ -21,58 +23,72 @@ const List = ({ index, column, tasks }: ListProps) => {
   const { token } = useAppSelector(state => state.user);
   const titleRef = useRef(null);
 
+  const onTaskDrop = (dropResult: DropResult) => {
+    const { removedIndex, addedIndex, payload } = dropResult;
+    if ((removedIndex !== null || addedIndex !== null) && token) {
+      const newColumn = Object.assign({}, column);
+      const newTaskIds = applyDrag(newColumn.tasks, dropResult);
+      updateList({ ...newColumn, tasks: newTaskIds }, token);
+    }
+  };
+  const getChildPayload = (index: number) => {
+    return tasks[index].id;
+  };
   useOutsideClick(titleRef, setEditTitle);
   useEffect(() => {
     if (!token || title === column.title || !title) return;
     updateList({ ...column, title }, token);
   }, [editTitle]);
   return (
-    <>
-      <S.ListWrapper id='noScroll'>
-        <S.List>
-          <S.Header>
-            {editTitle ? (
-              <S.Input
-                ref={titleRef}
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-              />
-            ) : (
-              <S.Title onClick={() => setEditTitle(true)}>
-                {column.title}
-              </S.Title>
-            )}
-            <MoreHoriz onClick={() => setModal(!modal)} />
-          </S.Header>
+    <Draggable>
+      <S.List>
+        <S.Header>
+          {editTitle ? (
+            <S.Input
+              ref={titleRef}
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
+          ) : (
+            <S.Title onClick={() => setEditTitle(true)}>{column.title}</S.Title>
+          )}
+          <MoreHoriz onClick={() => setModal(!modal)} />
+        </S.Header>
 
-          <Modal
-            handler={setModal}
-            active={modal}
-            styles={{
-              corners: 'sharp',
-              position: 'absolute',
-              positionTop: 2.5,
-              width: 17.8125,
-              height: 'auto',
-            }}
+        <Modal
+          handler={setModal}
+          active={modal}
+          styles={{
+            corners: 'sharp',
+            position: 'absolute',
+            positionTop: 2.5,
+            width: 17.8125,
+            height: 'auto',
+          }}
+        >
+          <S.Text $isTitle>List Actions</S.Text>
+          <S.Text>Copy List</S.Text>
+          <S.Text>Clear List</S.Text>
+          <S.Text onClick={() => deleteList(column.id, token as string)}>
+            Delete List
+          </S.Text>
+        </Modal>
+        <S.ListItemContainer>
+          <Container
+            groupName='list'
+            orientation='vertical'
+            onDrop={e => onTaskDrop(e)}
+            getChildPayload={getChildPayload}
           >
-            <S.Text $isTitle>List Actions</S.Text>
-            <S.Text>Copy List</S.Text>
-            <S.Text>Clear List</S.Text>
-            <S.Text onClick={() => deleteList(column.id, token as string)}>
-              Delete List
-            </S.Text>
-          </Modal>
-          <S.ListItemContainer>
             {tasks.map((task, index) => (
               <ListItem key={task.id} task={task} index={index} list={column} />
             ))}
-          </S.ListItemContainer>
+          </Container>
+        </S.ListItemContainer>
 
-          <AddButton btnType='item' listId={column.id} />
-        </S.List>
-      </S.ListWrapper>
-    </>
+        <AddButton btnType='item' listId={column.id} />
+      </S.List>
+    </Draggable>
   );
 };
 export default List;

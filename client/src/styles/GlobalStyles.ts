@@ -8,15 +8,15 @@ export default createGlobalStyle`
     box-sizing:border-box;
     margin:0;
     padding:0;
-    scroll-behavior: smooth;
+
 }
 body{
-    padding: 0 1rem;
     background-image: url(${Background});
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
-    min-height: 100vh;
+    height:100%;
+    width:100%;
 }
 button {
     display: inline-block;

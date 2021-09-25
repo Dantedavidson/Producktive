@@ -1,9 +1,6 @@
 import { DropResult } from 'smooth-dnd';
-interface Props {
-  arr: any[];
-  dropResult: DropResult;
-}
-export const applyDrag = ({ arr, dropResult }: Props) => {
+
+export const applyDrag = (arr: any[], dropResult: DropResult) => {
   const { removedIndex, addedIndex, payload } = dropResult;
   console.log(arr, removedIndex, addedIndex);
   if (removedIndex === null && addedIndex === null) return arr;
