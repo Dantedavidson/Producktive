@@ -26,6 +26,7 @@ const Lists = ({}: ListsProps) => {
       autoScrollEnabled
       orientation='horizontal'
       onDrop={e => onColumnDrop(e)}
+      dragHandleSelector='.dragHandle'
     >
       {columnOrder.map((col, index) => {
         const column = columns[col];

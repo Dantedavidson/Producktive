@@ -1,8 +1,24 @@
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
 import { AddButton, Lists } from '../index';
+import ScrollContainer from 'react-indiana-drag-scroll';
+import React, { ReactChild } from 'react';
 
-const ContainerStyled = styled.div`
+interface Props {
+  className?: string;
+  children: React.ReactNode;
+}
+
+const Scroll = ({ children, className }: Props) => (
+  <ScrollContainer
+    className={className}
+    ignoreElements='.noDrag'
+    hideScrollbars={false}
+  >
+    {children}
+  </ScrollContainer>
+);
+const ContainerStyled = styled(Scroll)`
   overflow-y: hidden;
   overflow-x: auto;
   padding: 1rem;

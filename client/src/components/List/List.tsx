@@ -41,53 +41,65 @@ const List = ({ index, column, tasks }: ListProps) => {
   }, [editTitle]);
   return (
     <Draggable>
-      <S.List>
-        <S.Header>
-          {editTitle ? (
-            <S.Input
-              ref={titleRef}
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-          ) : (
-            <S.Title onClick={() => setEditTitle(true)}>{column.title}</S.Title>
-          )}
-          <MoreHoriz onClick={() => setModal(!modal)} />
-        </S.Header>
+      <S.ListWrapper className='noDrag'>
+        <S.List>
+          <S.Header>
+            {editTitle ? (
+              <S.Input
+                ref={titleRef}
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+              />
+            ) : (
+              <S.Title
+                className='dragHandle'
+                onClick={() => setEditTitle(true)}
+              >
+                {column.title}
+              </S.Title>
+            )}
+            <MoreHoriz onClick={() => setModal(!modal)} />
+          </S.Header>
 
-        <Modal
-          handler={setModal}
-          active={modal}
-          styles={{
-            corners: 'sharp',
-            position: 'absolute',
-            positionTop: 2.5,
-            width: 17.8125,
-            height: 'auto',
-          }}
-        >
-          <S.Text $isTitle>List Actions</S.Text>
-          <S.Text>Copy List</S.Text>
-          <S.Text>Clear List</S.Text>
-          <S.Text onClick={() => deleteList(column.id, token as string)}>
-            Delete List
-          </S.Text>
-        </Modal>
-        <S.ListItemContainer>
-          <Container
-            groupName='list'
-            orientation='vertical'
-            onDrop={e => onTaskDrop(e)}
-            getChildPayload={getChildPayload}
+          <Modal
+            handler={setModal}
+            active={modal}
+            styles={{
+              corners: 'sharp',
+              position: 'absolute',
+              positionTop: 2.5,
+              width: 17.8125,
+              height: 'auto',
+            }}
           >
-            {tasks.map((task, index) => (
-              <ListItem key={task.id} task={task} index={index} list={column} />
-            ))}
-          </Container>
-        </S.ListItemContainer>
+            <S.Text $isTitle>List Actions</S.Text>
+            <S.Text>Copy List</S.Text>
+            <S.Text>Clear List</S.Text>
+            <S.Text onClick={() => deleteList(column.id, token as string)}>
+              Delete List
+            </S.Text>
+          </Modal>
+          <S.ListItemContainer>
+            <Container
+              groupName='list'
+              orientation='vertical'
+              onDrop={e => onTaskDrop(e)}
+              getChildPayload={getChildPayload}
+            >
+              {tasks.map((task, index) => (
+                <ListItem
+                  key={task.id}
+                  task={task}
+                  index={index}
+                  list={column}
+                />
+              ))}
+            </Container>
+          </S.ListItemContainer>
 
-        <AddButton btnType='item' listId={column.id} />
-      </S.List>
+          <AddButton btnType='item' listId={column.id} />
+        </S.List>
+      </S.ListWrapper>
     </Draggable>
   );
 };

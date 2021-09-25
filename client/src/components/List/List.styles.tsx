@@ -10,7 +10,7 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 18.75rem;
-  max-height: 100%;
+  max-height: calc(100vh - 12rem);
   margin-right: 0.5rem;
   padding: 0.5rem;
   background-color: rgb(230, 230, 230);
