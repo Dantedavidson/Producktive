@@ -39,9 +39,7 @@ export const Title = styled.h1`
   max-width: 15rem;
 `;
 
-export const ListItemContainer = styled.div<{
-  isDraggingOver: boolean;
-}>`
+export const ListItemContainer = styled.div`
   flex: 1 1 auto;
   min-height: 5px;
   overflow-x: hidden;

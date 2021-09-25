@@ -2,11 +2,7 @@ import styled from 'styled-components';
 import { Edit as _Edit } from '@material-ui/icons';
 import { CheckCircleOutline, RadioButtonUnchecked } from '@material-ui/icons';
 
-interface Props {
-  isDragging: boolean;
-}
-
-export const Container = styled.div<Props>`
+export const Container = styled.div`
   position: relative;
   padding: 0.3rem;
   background-color: white;
