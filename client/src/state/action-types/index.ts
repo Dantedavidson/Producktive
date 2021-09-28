@@ -12,6 +12,7 @@ export enum ActionType {
   CLEAR_BOARD = 'clear_board',
   CREATE_LIST = 'create_list',
   UPDATE_LIST = 'update_list',
+  COPY_LIST = 'copy_list',
   DELETE_LIST = 'delete_list',
   CLEAR_LIST = 'clear_list',
   REORDER_LIST = 'reorder_list',

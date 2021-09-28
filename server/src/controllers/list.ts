@@ -24,6 +24,34 @@ export const createList = async function (req: Request, res: Response) {
   }
 };
 
+export const copyList = async function (req: Request, res: Response) {
+  try {
+    const { board: boardToken } = req.token;
+    const board = await BoardService.find(boardToken);
+    if (!board) throw 'Error finding board';
+    const oldList = await ListService.find(board, req.body.listId);
+    if (!oldList) throw 'Error finding list';
+    const newList = ListService.create(oldList.title);
+
+    for (const task of oldList.tasks) {
+      const oldTask = await ListItemService.find(board, task);
+      if (!oldTask) throw 'Error finding task';
+      let newTask = ListItemService.create(
+        oldTask.title,
+        oldTask.content,
+        oldTask.status
+      );
+      newList.tasks.push(newTask.id);
+      await ListItemService.addToTasks(board, newTask);
+    }
+    const update = await ListService.addToBoard(board, newList);
+    return res.send(update);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+};
+
 export const getLists = async function (req: Request, res: Response) {
   try {
     const { board: boardToken } = req.token;
@@ -44,11 +72,9 @@ export const deleteList = async function (req: Request, res: Response) {
     for (const task of list.tasks) {
       await ListItemService.removeFromTasks(board, task);
     }
-    console.log('delete is going off');
     const update = await ListService.remove(board, req.params.id);
     return res.send(update);
   } catch (err) {
-    console.log(err);
     return res.send(err);
   }
 };

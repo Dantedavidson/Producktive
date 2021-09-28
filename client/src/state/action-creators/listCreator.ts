@@ -70,6 +70,31 @@ export const clearList = (listId: string, token: string) => {
   };
 };
 
+export const copyList = (listId: string, token: string) => {
+  return async (dispatch: Dispatch<ListAction>) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/list/copy`,
+        {
+          listId,
+        },
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
+      const board = {
+        id: data._id,
+        tasks: data.tasks,
+        columns: data.columns,
+        columnOrder: data.columnOrder,
+      };
+      dispatch({ type: ActionType.COPY_LIST, payload: board });
+    } catch (err) {}
+  };
+};
+
 export const reorderList = (columnOrder: string[], token: string) => {
   return async (dispatch: Dispatch<ListAction>) => {
     try {

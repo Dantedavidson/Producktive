@@ -7,11 +7,13 @@ import {
   updateListOrder,
   getLists,
   updateMany,
+  copyList,
 } from '../controllers/list';
 import { auth } from '../middleware/auth';
 
 const router = express.Router();
 router.get('/', auth, getLists);
+router.post('/copy', auth, copyList);
 router.post('/', auth, createList);
 router.delete('/clear/:id', auth, clearList);
 router.delete('/:id', auth, deleteList);

@@ -7,7 +7,6 @@ import { Column, Task } from '../../state';
 import { applyDrag } from '../../utility';
 import { useActions, useAppSelector, useOutsideClick } from '../../hooks';
 import Modal from '../Modal/Modal';
-import { userInfo } from 'os';
 
 interface ListProps {
   index: number;
@@ -19,7 +18,7 @@ const List = ({ index, column, tasks }: ListProps) => {
   const [modal, setModal] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [title, setTitle] = useState(column.title);
-  const { deleteList, updateList, clearList } = useActions();
+  const { deleteList, updateList, clearList, copyList } = useActions();
   const { token } = useAppSelector(state => state.user);
   const titleRef = useRef(null);
 
@@ -73,7 +72,14 @@ const List = ({ index, column, tasks }: ListProps) => {
             }}
           >
             <S.Text $isTitle>List Actions</S.Text>
-            <S.Text>Copy List</S.Text>
+            <S.Text
+              onClick={() => {
+                copyList(column.id, token as string);
+                setModal(false);
+              }}
+            >
+              Copy List
+            </S.Text>
             <S.Text
               onClick={() => {
                 clearList(column.id, token as string);

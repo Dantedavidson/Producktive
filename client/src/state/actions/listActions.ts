@@ -11,6 +11,11 @@ interface UpdateListAction {
   payload: Column;
 }
 
+interface CopyListAction {
+  type: ActionType.COPY_LIST;
+  payload: Board;
+}
+
 interface DeleteListAction {
   type: ActionType.DELETE_LIST;
   payload: Board;
@@ -29,6 +34,7 @@ interface ReorderListAction {
 export type ListAction =
   | CreateListAction
   | UpdateListAction
+  | CopyListAction
   | DeleteListAction
   | ClearListAction
   | ReorderListAction;

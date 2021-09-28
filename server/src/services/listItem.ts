@@ -2,15 +2,23 @@ import { BoardDocument, Column, Task } from '../models/board';
 import _ from 'lodash';
 import { v4 } from 'uuid';
 
-export function create(title: string = '') {
+export function create(
+  title: string = '',
+  content: string = '',
+  status: boolean = false
+) {
   const id = v4();
   const task: Task = {
     id,
     title,
-    content: '',
-    status: false,
+    content,
+    status,
   };
   return task;
+}
+
+export function find(board: BoardDocument, taskId: string) {
+  return board.tasks.get(taskId);
 }
 
 export async function addToTasks(board: BoardDocument, task: Task) {

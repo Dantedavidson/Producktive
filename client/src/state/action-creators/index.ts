@@ -5,6 +5,7 @@ export {
   deleteList,
   updateList,
   clearList,
+  copyList,
 } from './listCreator';
 export {
   createListItem,
