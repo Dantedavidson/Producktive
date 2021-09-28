@@ -41,7 +41,7 @@ const List = ({ index, column, tasks }: ListProps) => {
   }, [editTitle]);
   return (
     <Draggable>
-      <S.ListWrapper className='noDrag'>
+      <S.ListWrapper className='no-drag'>
         <S.List>
           <S.Header>
             {editTitle ? (
@@ -85,6 +85,13 @@ const List = ({ index, column, tasks }: ListProps) => {
               orientation='vertical'
               onDrop={e => onTaskDrop(e)}
               getChildPayload={getChildPayload}
+              dragClass='card-ghost'
+              dropClass='card-ghost-drop'
+              dropPlaceholder={{
+                animationDuration: 150,
+                showOnTop: true,
+                className: 'card-drop-preview',
+              }}
             >
               {tasks.map((task, index) => (
                 <ListItem

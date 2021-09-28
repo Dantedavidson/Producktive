@@ -8,7 +8,7 @@ const Button = styled.div<Props>`
   font-family: 'Balsamiq Sans', cursive;
   color: rgba(69, 68, 68, 0.6);
   border-radius: 5px;
-  transition: all 250ms ease;
+  transition: background-color 250ms ease, color 250ms ease;
   text-align: left;
   cursor: ${({ active }) => (active ? 'default' : 'pointer')};
 

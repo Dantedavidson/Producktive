@@ -16,6 +16,8 @@ export const Container = styled.div`
   align-items: start;
   word-wrap: break-word;
 `;
+export const ItemWrapper = styled.div``;
+
 export const IconWrapper = styled.div`
   display: flex;
   align-items: center;

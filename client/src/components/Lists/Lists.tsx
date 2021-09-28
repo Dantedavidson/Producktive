@@ -27,6 +27,11 @@ const Lists = ({}: ListsProps) => {
       orientation='horizontal'
       onDrop={e => onColumnDrop(e)}
       dragHandleSelector='.dragHandle'
+      dropPlaceholder={{
+        animationDuration: 150,
+        showOnTop: true,
+        className: 'column-drop-preview',
+      }}
     >
       {columnOrder.map((col, index) => {
         const column = columns[col];

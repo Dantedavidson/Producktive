@@ -47,4 +47,26 @@ textarea {
     min-height:5px;
 }
  
+
+ /* Smooth dnd placeholder styles */
+ 
+ .column-drop-preview{
+     background-color:rgba(51, 51, 51,0.1);
+     border-radius: 5px;
+     margin: 5px;
+ }
+ .card-drop-preview{
+    background-color: rgba(150, 150, 200, 0.1);
+    border: 1px dashed #abc;
+    margin: 5px;
+ }
+
+ .card-ghost{
+     transform: rotate(3deg);
+ }
+
+ 
+
+
+
 `;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
 import { UserAction } from '../actions/userActions';
@@ -42,6 +43,16 @@ export const loginUser = (userDetails: UserDetails) => {
         },
       });
     } catch (err) {
+      toast.error('Incorrect username or password', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        toastId: 'login-error',
+      });
       dispatch({
         type: ActionType.LOGIN_USER_ERROR,
         payload: err.message,
@@ -81,7 +92,6 @@ export const signupUser = (userDetails: UserDetails) => {
           password: userDetails.password,
         }
       );
-      console.log(data.token);
       dispatch({
         type: ActionType.CREATE_USER_SUCCESS,
         payload: data.token,
@@ -89,6 +99,16 @@ export const signupUser = (userDetails: UserDetails) => {
       dispatch({
         type: ActionType.LOAD_BOARD_SUCCESS,
         payload: { id: data.boardId, tasks: {}, columns: {}, columnOrder: [] },
+      });
+      toast.success('Signup Success', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        toastId: 'Signup-success',
       });
     } catch (err) {
       dispatch({
@@ -98,6 +118,16 @@ export const signupUser = (userDetails: UserDetails) => {
       dispatch({
         type: ActionType.LOAD_BOARD_ERROR,
         payload: 'Could not load board',
+      });
+      toast.error("Couldn't complete signup", {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        toastId: 'Signup-error',
       });
     }
   };

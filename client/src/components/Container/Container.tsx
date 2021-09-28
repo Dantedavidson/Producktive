@@ -4,15 +4,15 @@ import { AddButton, Lists } from '../index';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import React, { ReactChild } from 'react';
 
-interface Props {
+interface ScrollProps {
   className?: string;
   children: React.ReactNode;
 }
 
-const Scroll = ({ children, className }: Props) => (
+const Scroll = ({ children, className }: ScrollProps) => (
   <ScrollContainer
     className={className}
-    ignoreElements='.noDrag'
+    ignoreElements='.no-drag'
     hideScrollbars={false}
   >
     {children}
