@@ -16,6 +16,11 @@ interface DeleteListAction {
   payload: Board;
 }
 
+interface ClearListAction {
+  type: ActionType.CLEAR_LIST;
+  payload: Board;
+}
+
 interface ReorderListAction {
   type: ActionType.REORDER_LIST;
   payload: string[];
@@ -25,4 +30,5 @@ export type ListAction =
   | CreateListAction
   | UpdateListAction
   | DeleteListAction
+  | ClearListAction
   | ReorderListAction;

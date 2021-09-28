@@ -19,7 +19,7 @@ const List = ({ index, column, tasks }: ListProps) => {
   const [modal, setModal] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [title, setTitle] = useState(column.title);
-  const { deleteList, updateList } = useActions();
+  const { deleteList, updateList, clearList } = useActions();
   const { token } = useAppSelector(state => state.user);
   const titleRef = useRef(null);
 
@@ -74,7 +74,14 @@ const List = ({ index, column, tasks }: ListProps) => {
           >
             <S.Text $isTitle>List Actions</S.Text>
             <S.Text>Copy List</S.Text>
-            <S.Text>Clear List</S.Text>
+            <S.Text
+              onClick={() => {
+                clearList(column.id, token as string);
+                setModal(false);
+              }}
+            >
+              Clear List
+            </S.Text>
             <S.Text onClick={() => deleteList(column.id, token as string)}>
               Delete List
             </S.Text>

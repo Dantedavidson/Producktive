@@ -36,6 +36,7 @@ export const createListItem = (
     }
   };
 };
+
 export const updateListItem = (item: Task, token: string) => {
   return async (dispatch: Dispatch<ListItemAction>) => {
     try {
@@ -57,6 +58,7 @@ export const updateListItem = (item: Task, token: string) => {
     }
   };
 };
+
 export const deleteListItem = (
   taskId: string,
   listId: string,
@@ -82,6 +84,7 @@ export const deleteListItem = (
     }
   };
 };
+
 export const moveListItem = (from: Column, to: Column, token: string) => {
   return async (dispatch: Dispatch<ListItemAction>) => {
     try {

@@ -44,10 +44,30 @@ export const deleteList = async function (req: Request, res: Response) {
     for (const task of list.tasks) {
       await ListItemService.removeFromTasks(board, task);
     }
+    console.log('delete is going off');
     const update = await ListService.remove(board, req.params.id);
     return res.send(update);
   } catch (err) {
+    console.log(err);
     return res.send(err);
+  }
+};
+
+export const clearList = async function (req: Request, res: Response) {
+  try {
+    const { board: boardToken } = req.token;
+    const board = await BoardService.find(boardToken);
+    if (!board) throw 'Error deleting list items';
+    const list = await ListService.find(board, req.params.id);
+    if (!list) throw 'Error deleting list items';
+    for (const task of list.tasks) {
+      await ListItemService.removeFromTasks(board, task);
+    }
+    const update = await ListService.clear(board, list);
+    return res.send(update);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
   }
 };
 

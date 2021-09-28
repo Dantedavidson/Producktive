@@ -49,6 +49,12 @@ const reducer = (
         error: null,
         board: action.payload,
       };
+    case ActionType.CLEAR_LIST:
+      return {
+        loading: false,
+        error: null,
+        board: action.payload,
+      };
     case ActionType.UPDATE_LIST:
       return {
         loading: false,

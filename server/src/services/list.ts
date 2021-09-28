@@ -30,8 +30,17 @@ export async function remove(board: BoardDocument, listId: string) {
   return board.save();
 }
 
+export async function clear(board: BoardDocument, list: Column) {
+  board.set(`columns.${list.id}`, {
+    tasks: [],
+    id: list.id,
+    title: list.title,
+  });
+  console.log('this is the board');
+  return board.save();
+}
+
 export async function update(board: BoardDocument, list: Column) {
-  console.log('i went off');
   board.set(`columns.${list.id}`, {
     tasks: list.tasks,
     id: list.id,

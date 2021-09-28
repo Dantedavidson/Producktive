@@ -48,6 +48,28 @@ export const deleteList = (listId: string, token: string) => {
   };
 };
 
+export const clearList = (listId: string, token: string) => {
+  return async (dispatch: Dispatch<ListAction>) => {
+    try {
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/list/clear/${listId}`,
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
+      const newState = {
+        id: data._id,
+        tasks: data.tasks,
+        columns: data.columns,
+        columnOrder: data.columnOrder,
+      };
+      dispatch({ type: ActionType.CLEAR_LIST, payload: newState });
+    } catch (err) {}
+  };
+};
+
 export const reorderList = (columnOrder: string[], token: string) => {
   return async (dispatch: Dispatch<ListAction>) => {
     try {

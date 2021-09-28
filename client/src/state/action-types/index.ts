@@ -13,6 +13,7 @@ export enum ActionType {
   CREATE_LIST = 'create_list',
   UPDATE_LIST = 'update_list',
   DELETE_LIST = 'delete_list',
+  CLEAR_LIST = 'clear_list',
   REORDER_LIST = 'reorder_list',
   CREATE_TASK = 'create_task',
   UPDATE_TASK = 'update_task',

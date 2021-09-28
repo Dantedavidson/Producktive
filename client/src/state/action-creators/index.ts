@@ -1,5 +1,11 @@
 export { logoutUser, loginUser, signupUser } from './userCreator';
-export { createList, reorderList, deleteList, updateList } from './listCreator';
+export {
+  createList,
+  reorderList,
+  deleteList,
+  updateList,
+  clearList,
+} from './listCreator';
 export {
   createListItem,
   moveListItem,
