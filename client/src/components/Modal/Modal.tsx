@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
-import { useOutsideClick } from '../../hooks';
 import { Close as _Close } from '@material-ui/icons';
+import React, { useRef } from 'react';
 import Styled from 'styled-components';
+import { useOutsideClick } from '../../hooks';
 
 type Styles = {
   corners: 'sharp' | 'rounded';
@@ -68,20 +68,20 @@ const Close = Styled(_Close)`
   font-size: 1.2rem;
   `;
 
-const Modal = ({ children, active, handler, styles }: Props) => {
-  const ref = useRef<any>(null);
-  useOutsideClick(ref, handler);
+const Modal = React.forwardRef<any, Props>((props, ref) => {
+  const modalRef = useRef<any>(null);
+  useOutsideClick(modalRef, props.handler, ref as React.MutableRefObject<any>);
   return (
     <StyledModal
-      ref={ref}
-      $display={active}
-      $styles={styles}
+      ref={modalRef}
+      $display={props.active}
+      $styles={props.styles}
       className='no-drag'
     >
-      <Close onClick={() => handler(false)} />
-      {children}
+      <Close onClick={() => props.handler(false)} />
+      {props.children}
     </StyledModal>
   );
-};
+});
 
 export default Modal;

@@ -1,18 +1,13 @@
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ThemeProvider } from 'styled-components';
+import BoardPage from './Pages/BoardPage';
+import LoginPage from './Pages/LoginPage';
 import { store } from './state';
 import GlobalStyles from './styles/GlobalStyles';
-import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme.json';
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import LoginPage from './Pages/LoginPage';
-import BoardPage from './Pages/BoardPage';
-import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (

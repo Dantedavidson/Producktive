@@ -1,8 +1,6 @@
-import * as S from './EditInput.styles';
 import { Button } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
-import { useEffect } from 'react';
-import { string } from 'yup/lib/locale';
+import * as S from './EditInput.styles';
 interface Props {
   input: string;
   initial?: string;

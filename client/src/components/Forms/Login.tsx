@@ -20,7 +20,6 @@ const Login = ({ setView }: Props) => {
   } = useForm();
   const { loginUser } = useActions();
   const onSubmit: SubmitHandler<FormInputs> = data => {
-    console.log(data);
     loginUser(data);
   };
   return (

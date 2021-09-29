@@ -21,6 +21,7 @@ const List = ({ index, column, tasks }: ListProps) => {
   const { deleteList, updateList, clearList, copyList } = useActions();
   const { token } = useAppSelector(state => state.user);
   const titleRef = useRef(null);
+  const ellipseRef = useRef(null);
 
   const onTaskDrop = (dropResult: DropResult) => {
     const { removedIndex, addedIndex, payload } = dropResult;
@@ -53,7 +54,7 @@ const List = ({ index, column, tasks }: ListProps) => {
                 {column.title}
               </S.Title>
             )}
-            <MoreHoriz onClick={() => setModal(!modal)} />
+            {<MoreHoriz ref={ellipseRef} onClick={() => setModal(!modal)} />}
           </S.Header>
 
           <Modal
@@ -66,6 +67,7 @@ const List = ({ index, column, tasks }: ListProps) => {
               width: 17.8125,
               height: 'auto',
             }}
+            ref={ellipseRef}
           >
             <S.Text $isTitle>List Actions</S.Text>
             <S.Text

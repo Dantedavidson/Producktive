@@ -1,9 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import * as ListService from '../services/list';
+import { Request, Response } from 'express';
+import { validateColumn, validateColumnOrder } from '../models/board';
 import * as BoardService from '../services/board';
+import * as ListService from '../services/list';
 import * as ListItemService from '../services/listItem';
-import _ from 'lodash';
-import { validateColumn, validateColumnOrder, Column } from '../models/board';
 
 export const createList = async function (req: Request, res: Response) {
   try {

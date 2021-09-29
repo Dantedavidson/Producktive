@@ -5,7 +5,6 @@ import cors from 'cors';
 import userRouter from './routes/user';
 import listRouter from './routes/list';
 import itemRouter from './routes/listItem';
-import { JwtPayload } from 'jsonwebtoken';
 import router from './routes/user';
 
 dotenv.config();

@@ -1,5 +1,5 @@
 import { ActionType } from '../action-types';
-import { Board, Column, Task } from '../types';
+import { Board, Column } from '../types';
 
 interface CreateListAction {
   type: ActionType.CREATE_LIST;

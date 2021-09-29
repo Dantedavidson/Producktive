@@ -1,7 +1,5 @@
-import Board, { BoardDocument, Column } from '../models/board';
-import _ from 'lodash';
-import { find as findBoard } from './board';
 import { v4 } from 'uuid';
+import { BoardDocument, Column } from '../models/board';
 
 export function create(title: string) {
   const id = v4();

@@ -1,5 +1,5 @@
 import { ClientSession } from 'mongoose';
-import User, { UserDocument, UserDetails } from '../models/user';
+import User, { UserDetails } from '../models/user';
 
 export async function create(input: UserDetails, session: ClientSession) {
   return User.create([input], { session });

@@ -5,7 +5,6 @@ import {
   updateTask,
   moveTask,
   deleteAllTasks,
-  // reorderTask,
 } from '../controllers/listItem';
 import { auth } from '../middleware/auth';
 

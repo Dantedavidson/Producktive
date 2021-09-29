@@ -1,10 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
-import { validateUser } from '../models/user';
-import Board from '../models/board';
-import mongoose from 'mongoose';
+import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import * as UserService from '../services/user';
+import mongoose from 'mongoose';
+import { validateUser } from '../models/user';
 import * as BoardService from '../services/board';
+import * as UserService from '../services/user';
 
 interface Data {
   token: string | null;

@@ -36,7 +36,6 @@ const Signup = ({ setView }: Props) => {
   });
   const { signupUser } = useActions();
   const onSubmit: SubmitHandler<FormInputs> = data => {
-    console.log(data);
     signupUser(data);
   };
   return (

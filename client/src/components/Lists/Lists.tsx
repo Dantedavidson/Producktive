@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { useActions, useAppSelector } from '../../hooks';
-import * as S from './Lists.styles';
 import { Container, DropResult } from 'react-smooth-dnd';
-import { applyDrag } from '../../utility';
 import { List } from '..';
+import { useActions, useAppSelector } from '../../hooks';
 import { Board } from '../../state';
-interface ListsProps {}
+import { applyDrag } from '../../utility';
 
-const Lists = ({}: ListsProps) => {
+const Lists = () => {
   const { board: boardState, user: userState } = useAppSelector(state => state);
   const { reorderList } = useActions();
   const { columnOrder, columns, tasks } = boardState.board as Board;

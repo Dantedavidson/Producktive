@@ -1,9 +1,8 @@
-import * as S from './AddButton.styles';
-import { useState, useRef } from 'react';
-import { Button } from '@material-ui/core';
-import { CloseRounded, AddRounded } from '@material-ui/icons';
+import { AddRounded } from '@material-ui/icons';
+import { useRef, useState } from 'react';
 import { EditInput } from '..';
 import { useActions, useAppSelector, useOutsideClick } from '../../hooks';
+import * as S from './AddButton.styles';
 
 interface AddButtonProps {
   btnType: 'list' | 'item';

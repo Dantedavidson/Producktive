@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { BoardDocument, validateTask, validateColumn } from '../models/board';
+import { Request, Response } from 'express';
+import { validateTask } from '../models/board';
 import * as BoardService from '../services/board';
 import * as ListService from '../services/list';
 import * as ListItemService from '../services/listItem';

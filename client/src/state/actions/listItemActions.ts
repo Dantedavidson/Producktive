@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import { ActionType } from '../action-types';
 import { Board, Column, Task } from '../types';
 

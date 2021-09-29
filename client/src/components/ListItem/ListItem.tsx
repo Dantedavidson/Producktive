@@ -6,7 +6,6 @@ import { Draggable } from 'react-smooth-dnd';
 import { useAppSelector, useActions, useOutsideClick } from '../../hooks';
 export const ListItem = ({
   task,
-  index,
   list,
 }: {
   task: Task;
