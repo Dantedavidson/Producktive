@@ -3,6 +3,7 @@ import { CloseRounded } from '@material-ui/icons';
 import * as S from './EditInput.styles';
 interface Props {
   input: string;
+  label: string;
   initial?: string;
   buttonText: string;
   inputHandler: React.Dispatch<React.SetStateAction<string>>;
@@ -12,6 +13,7 @@ interface Props {
 
 const EditInput = ({
   input,
+  label,
   buttonText,
   initial,
   inputHandler,
@@ -20,7 +22,11 @@ const EditInput = ({
 }: Props) => {
   return (
     <>
-      <S.Input onChange={e => inputHandler(e.target.value)} value={input} />
+      <S.Input
+        aria-label={label}
+        onChange={e => inputHandler(e.target.value)}
+        value={input}
+      />
       <S.Row>
         <Button
           variant='contained'

@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import Background from '../images/background.jpg';
+import Background from '../images/sitebackground.jpg';
 
 export default createGlobalStyle`
 
@@ -9,12 +9,12 @@ export default createGlobalStyle`
     margin:0;
     padding:0;
     //Remove text select
-    -webkit-touch-callout: none; 
+    /* -webkit-touch-callout: none; 
     -webkit-user-select: none; 
     -khtml-user-select: none; 
     -moz-user-select: none; 
     -ms-user-select: none; 
-    user-select: none; 
+    user-select: none;  */
 
 }
 body{

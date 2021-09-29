@@ -8,7 +8,7 @@ interface Props {
 const Header = ({ small }: Props) => {
   return (
     <S.Header small={small}>
-      <S.Image src={Logo} />
+      <S.Image src={Logo} alt='Productive Logo' />
     </S.Header>
   );
 };

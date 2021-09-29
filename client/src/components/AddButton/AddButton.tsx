@@ -39,6 +39,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
           <>
             <EditInput
               input={input}
+              label='List Title'
               inputHandler={setInput}
               buttonText='Add List'
               buttonHandler={handleList}
@@ -61,6 +62,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
           <>
             <EditInput
               input={input}
+              label='Task Title'
               inputHandler={setInput}
               buttonText='Add Task'
               buttonHandler={handleListItem}

@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { Board, Column, Task } from '..';
+import { Column, Task } from '..';
 import { ActionType } from '../action-types';
-import { ListAction } from '../actions/listActions';
 import { ListItemAction } from '../actions/listItemActions';
 
 export const createListItem = (

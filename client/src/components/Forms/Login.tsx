@@ -13,11 +13,7 @@ interface FormInputs {
   password: string;
 }
 const Login = ({ setView }: Props) => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { control, handleSubmit } = useForm();
   const { loginUser } = useActions();
   const onSubmit: SubmitHandler<FormInputs> = data => {
     loginUser(data);

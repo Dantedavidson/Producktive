@@ -8,7 +8,8 @@ Data.json
 /coverage
 
 # production
-/build
+build
+.netlify
 
 # misc
 .DS_Store

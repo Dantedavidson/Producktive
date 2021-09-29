@@ -14,7 +14,7 @@ interface ListProps {
   tasks: Task[];
 }
 
-const List = ({ index, column, tasks }: ListProps) => {
+const List = ({ column, tasks }: ListProps) => {
   const [modal, setModal] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [title, setTitle] = useState(column.title);
@@ -24,7 +24,7 @@ const List = ({ index, column, tasks }: ListProps) => {
   const ellipseRef = useRef(null);
 
   const onTaskDrop = (dropResult: DropResult) => {
-    const { removedIndex, addedIndex, payload } = dropResult;
+    const { removedIndex, addedIndex } = dropResult;
     if ((removedIndex !== null || addedIndex !== null) && token) {
       const newColumn = Object.assign({}, column);
       const newTaskIds = applyDrag(newColumn.tasks, dropResult);
@@ -45,7 +45,12 @@ const List = ({ index, column, tasks }: ListProps) => {
         <S.List>
           <S.Header>
             {editTitle ? (
-              <Input ref={titleRef} value={title} setValue={setTitle} />
+              <Input
+                ref={titleRef}
+                label='Edit List Title'
+                value={title}
+                setValue={setTitle}
+              />
             ) : (
               <S.Title
                 className='dragHandle'

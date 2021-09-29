@@ -94,7 +94,12 @@ export const ListItem = ({
                 {/* Modal Header */}
                 <S.Row>
                   {editTitle ? (
-                    <Input ref={titleRef} value={title} setValue={setTitle} />
+                    <Input
+                      ref={titleRef}
+                      label='Edit Task Title'
+                      value={title}
+                      setValue={setTitle}
+                    />
                   ) : (
                     <S.ModalTitle
                       onClick={() => setEditTitle(true)}
@@ -122,6 +127,7 @@ export const ListItem = ({
                     {editDesc ? (
                       <EditInput
                         input={content}
+                        label='Edit Task Description'
                         inputHandler={setContent}
                         buttonText='Save'
                         buttonHandler={handleContent}
