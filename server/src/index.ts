@@ -17,6 +17,8 @@ const mongoDB = process.env.MONGODB_CONNECTION_STRING;
 
 mongoose.connect(mongoDB as string);
 
+const port = process.env.PORT || 3001;
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 router.use(express.json());
@@ -24,6 +26,6 @@ app.use('/api/users', userRouter);
 app.use('/api/list', listRouter);
 app.use('/api/listItem', itemRouter);
 
-app.listen('3001', (): void => {
-  console.log('Server Running!');
+app.listen(port, (): void => {
+  console.log(`Server Running on ${port}`);
 });
