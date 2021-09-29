@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
+import { TextareaAutosize } from '@material-ui/core';
 
 export const Container = styled.div`
   border: 1px solid grey;
@@ -39,4 +40,11 @@ export const Anchor = styled.a`
 
 export const Row = styled.div`
   margin-bottom: 1.5rem;
+`;
+
+export const Input = styled(TextareaAutosize)`
+  && {
+    min-width: 16.25rem;
+    max-width: 16.25rem;
+  }
 `;

@@ -53,10 +53,6 @@ const Login = ({ setView }: Props) => {
         Need an account?{' '}
         <S.Anchor onClick={() => setView('signup')}>Signup</S.Anchor>
       </S.Text>
-      <S.Text $center>OR</S.Text>
-      <S.FormButton variant='contained' color='primary'>
-        Guest Login
-      </S.FormButton>
     </S.Container>
   );
 };

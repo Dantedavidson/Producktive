@@ -32,6 +32,7 @@ const Lists = ({}: ListsProps) => {
         showOnTop: true,
         className: 'column-drop-preview',
       }}
+      nonDragAreaSelector='no-drag'
     >
       {columnOrder.map((col, index) => {
         const column = columns[col];

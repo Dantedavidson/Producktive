@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import * as S from './ListItem.styles';
 import { Task, Column } from '../../state';
-import { EditInput } from '..';
-import { Modal } from '..';
+import { EditInput, Modal, Input } from '..';
 import { Draggable } from 'react-smooth-dnd';
-import { useAppSelector, useActions } from '../../hooks';
+import { useAppSelector, useActions, useOutsideClick } from '../../hooks';
 export const ListItem = ({
   task,
   index,
@@ -17,8 +16,11 @@ export const ListItem = ({
   const [modal, setModal] = useState(false);
   const [content, setContent] = useState(task.content);
   const [editDesc, setEditDesc] = useState(false);
+  const [title, setTitle] = useState(task.title);
+  const [editTitle, setEditTitle] = useState(false);
   const { token } = useAppSelector(state => state.user);
   const { updateListItem, deleteListItem } = useActions();
+  const titleRef = useRef(null);
   const handleContent = () => {
     if (!token) return;
     const updateTask = { ...task, content: content };
@@ -30,14 +32,24 @@ export const ListItem = ({
     setModal(false);
     deleteListItem(task.id, list.id, token);
   };
+
+  useOutsideClick(titleRef, setEditTitle);
+
+  useEffect(() => {
+    if (!token || title === task.title || !title) return;
+    updateListItem({ ...task, title }, token);
+  }, [editTitle]);
+
   useEffect(() => {
     setEditDesc(false);
+    setEditTitle(false);
   }, [modal]);
   return (
     <>
       <Draggable>
         <S.ItemWrapper>
           <S.ModalBg $active={modal} />
+
           <S.Container>
             <S.Title status={task.status}>{task.title}</S.Title>
             <S.IconWrapper>
@@ -78,47 +90,65 @@ export const ListItem = ({
               }}
             >
               <S.Wrap>
+                {/* Modal Header */}
                 <S.Row>
-                  <S.ModalTitle style={{ cursor: 'pointer' }}>
-                    {task.title}
-                  </S.ModalTitle>
-                </S.Row>
-                <S.SmallText>Item in {list.title}</S.SmallText>
-              </S.Wrap>
-              <S.Wrap key={`${task.id}-inputs`}>
-                <S.Row>
-                  <S.ModalTitle>Description</S.ModalTitle>
-                  {!editDesc && (
-                    <S.Edit
-                      onClick={() => setEditDesc(!editDesc)}
-                      fontSize='small'
-                      style={{ marginLeft: 15, cursor: 'pointer' }}
-                    />
+                  {editTitle ? (
+                    <Input ref={titleRef} value={title} setValue={setTitle} />
+                  ) : (
+                    <S.ModalTitle
+                      onClick={() => setEditTitle(true)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {task.title}
+                    </S.ModalTitle>
                   )}
                 </S.Row>
-                {editDesc ? (
-                  <EditInput
-                    input={content}
-                    inputHandler={setContent}
-                    buttonText='Save'
-                    buttonHandler={handleContent}
-                    activeHandler={setEditDesc}
-                    initial={task.content}
-                  />
-                ) : (
-                  <S.Text
-                    $content={task.content}
-                    onClick={() => {
-                      setEditDesc(true);
-                    }}
-                  >
-                    {task.content
-                      ? task.content
-                      : 'Add a more detailed description...'}
-                  </S.Text>
-                )}
+                <S.SmallText>Item in {list.title}</S.SmallText>
 
-                <button onClick={handleDelete}>delete me</button>
+                {/* Modal Item Description */}
+                <S.Grid>
+                  <S.Column>
+                    <S.Row>
+                      <S.ModalTitle>Description</S.ModalTitle>
+                      {!editDesc && (
+                        <S.Edit
+                          onClick={() => setEditDesc(!editDesc)}
+                          fontSize='small'
+                          style={{ marginLeft: 15, cursor: 'pointer' }}
+                        />
+                      )}
+                    </S.Row>
+                    {editDesc ? (
+                      <EditInput
+                        input={content}
+                        inputHandler={setContent}
+                        buttonText='Save'
+                        buttonHandler={handleContent}
+                        activeHandler={setEditDesc}
+                        initial={task.content}
+                      />
+                    ) : (
+                      <S.Text
+                        $content={task.content}
+                        onClick={() => {
+                          setEditDesc(true);
+                        }}
+                      >
+                        {task.content
+                          ? task.content
+                          : 'Add a more detailed description...'}
+                      </S.Text>
+                    )}
+                  </S.Column>
+                  <S.Column>
+                    <S.Row>
+                      <S.ModalTitle>Item Actions</S.ModalTitle>
+                    </S.Row>
+                    <S.Button variant='contained' size='small'>
+                      Delete Task
+                    </S.Button>
+                  </S.Column>
+                </S.Grid>
               </S.Wrap>
             </Modal>
           </S.Container>

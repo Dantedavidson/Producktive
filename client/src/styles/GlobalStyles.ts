@@ -22,7 +22,7 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
-    height:100%;
+    height:100vh;
     width:100%;
 }
 button {

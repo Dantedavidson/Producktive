@@ -72,7 +72,12 @@ const Modal = ({ children, active, handler, styles }: Props) => {
   const ref = useRef<any>(null);
   useOutsideClick(ref, handler);
   return (
-    <StyledModal ref={ref} $display={active} $styles={styles}>
+    <StyledModal
+      ref={ref}
+      $display={active}
+      $styles={styles}
+      className='no-drag'
+    >
       <Close onClick={() => handler(false)} />
       {children}
     </StyledModal>

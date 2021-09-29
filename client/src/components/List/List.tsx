@@ -2,7 +2,7 @@ import * as S from './List.styles';
 import { useState, useEffect, useRef } from 'react';
 import { Container, Draggable, DropResult } from 'react-smooth-dnd';
 import { Close, MoreHoriz } from '@material-ui/icons';
-import { ListItem, AddButton } from '../index';
+import { ListItem, AddButton, Input } from '../index';
 import { Column, Task } from '../../state';
 import { applyDrag } from '../../utility';
 import { useActions, useAppSelector, useOutsideClick } from '../../hooks';
@@ -44,11 +44,7 @@ const List = ({ index, column, tasks }: ListProps) => {
         <S.List>
           <S.Header>
             {editTitle ? (
-              <S.Input
-                ref={titleRef}
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-              />
+              <Input ref={titleRef} value={title} setValue={setTitle} />
             ) : (
               <S.Title
                 className='dragHandle'
@@ -105,6 +101,7 @@ const List = ({ index, column, tasks }: ListProps) => {
                 showOnTop: true,
                 className: 'card-drop-preview',
               }}
+              nonDragAreaSelector='.no-drag'
             >
               {tasks.map((task, index) => (
                 <ListItem

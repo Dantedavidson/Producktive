@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { TextareaAutosize } from '@material-ui/core';
 
 export const ListWrapper = styled.div`
   height: 100%;
@@ -37,6 +36,7 @@ export const Title = styled.h1`
   font-size: 1.5rem;
   flex-grow: 1;
   max-width: 15rem;
+  cursor: grab;
 `;
 
 export const ListItemContainer = styled.div`
@@ -73,12 +73,5 @@ export const Text = styled.p<{ $isTitle?: boolean }>`
   color: rgba(69, 68, 68, 0.7);
   &:hover {
     color: ${props => !props.$isTitle && 'rgb(69, 68, 68)'};
-  }
-`;
-
-export const Input = styled(TextareaAutosize)`
-  && {
-    min-width: 16.25rem;
-    max-width: 16.25rem;
   }
 `;
