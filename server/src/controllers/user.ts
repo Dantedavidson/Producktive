@@ -22,7 +22,7 @@ export const createUser = async function (req: Request, res: Response) {
       board: board[0].id,
     };
     const { error } = validateUser(input);
-    if (error) throw error;
+    if (error) throw 'Invalid user inputs';
     const user = await UserService.create(input, session);
     const token = jwt.sign(
       {
@@ -34,8 +34,7 @@ export const createUser = async function (req: Request, res: Response) {
     await session.commitTransaction();
     res.send({ token: token, error: null });
   } catch (err) {
-    console.log(err);
-    res.send({ token: null, error: 'Something went wrong' });
+    res.send({ token: null, error: 'User already exists' });
   } finally {
     session.endSession();
   }

@@ -92,6 +92,7 @@ export const signupUser = (userDetails: UserDetails) => {
           password: userDetails.password,
         }
       );
+      if (data.error) throw data.error;
       dispatch({
         type: ActionType.CREATE_USER_SUCCESS,
         payload: data.token,
@@ -111,6 +112,7 @@ export const signupUser = (userDetails: UserDetails) => {
         toastId: 'Signup-success',
       });
     } catch (err) {
+      console.log(err);
       dispatch({
         type: ActionType.CREATE_USER_ERROR,
         payload: err.message,
@@ -119,7 +121,7 @@ export const signupUser = (userDetails: UserDetails) => {
         type: ActionType.LOAD_BOARD_ERROR,
         payload: 'Could not load board',
       });
-      toast.error("Couldn't complete signup", {
+      toast.error(err, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,

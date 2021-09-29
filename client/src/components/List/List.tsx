@@ -1,7 +1,7 @@
 import * as S from './List.styles';
 import { useState, useEffect, useRef } from 'react';
 import { Container, Draggable, DropResult } from 'react-smooth-dnd';
-import { Close, MoreHoriz } from '@material-ui/icons';
+import { MoreHoriz } from '@material-ui/icons';
 import { ListItem, AddButton, Input } from '../index';
 import { Column, Task } from '../../state';
 import { applyDrag } from '../../utility';
@@ -40,7 +40,7 @@ const List = ({ index, column, tasks }: ListProps) => {
   }, [editTitle]);
   return (
     <Draggable>
-      <S.ListWrapper className='no-drag'>
+      <S.ListWrapper>
         <S.List>
           <S.Header>
             {editTitle ? (
@@ -102,6 +102,7 @@ const List = ({ index, column, tasks }: ListProps) => {
                 className: 'card-drop-preview',
               }}
               nonDragAreaSelector='.no-drag'
+              dragHandleSelector='.drag-handle'
             >
               {tasks.map((task, index) => (
                 <ListItem

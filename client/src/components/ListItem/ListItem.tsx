@@ -51,7 +51,9 @@ export const ListItem = ({
           <S.ModalBg $active={modal} />
 
           <S.Container>
-            <S.Title status={task.status}>{task.title}</S.Title>
+            <S.Title className='drag-handle' status={task.status}>
+              {task.title}
+            </S.Title>
             <S.IconWrapper>
               {task.status ? (
                 <S.Complete
@@ -144,7 +146,11 @@ export const ListItem = ({
                     <S.Row>
                       <S.ModalTitle>Item Actions</S.ModalTitle>
                     </S.Row>
-                    <S.Button variant='contained' size='small'>
+                    <S.Button
+                      onClick={handleDelete}
+                      variant='contained'
+                      size='small'
+                    >
                       Delete Task
                     </S.Button>
                   </S.Column>
