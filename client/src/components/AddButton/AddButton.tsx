@@ -1,4 +1,5 @@
 import { AddRounded } from '@material-ui/icons';
+import { Board } from '../../state';
 import { useRef, useState } from 'react';
 import { EditInput } from '..';
 import { useActions, useAppSelector, useOutsideClick } from '../../hooks';
@@ -13,23 +14,24 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
   const [active, setActive] = useState(false);
   const [input, setInput] = useState('');
   const { createList, createListItem } = useActions();
-  const { token } = useAppSelector(state => state.user);
+  const { user, board } = useAppSelector(state => state);
+
   const ref = useRef<any>(null);
 
   useOutsideClick(ref, setActive);
 
   const handleList = () => {
-    if (!token || !input) return;
+    if (!input) return;
     setInput('');
     setActive(false);
-    createList(input, token);
+    createList(board.board as Board, user, input);
   };
 
   const handleListItem = () => {
-    if (!token || !input || !listId) return;
+    if (!user.token || !input || !listId) return;
     setInput('');
     setActive(false);
-    createListItem(listId, input, token);
+    createListItem(listId, input, user.token);
   };
 
   if (btnType === 'list')

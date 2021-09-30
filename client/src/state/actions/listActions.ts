@@ -3,7 +3,7 @@ import { Board, Column } from '../types';
 
 interface CreateListAction {
   type: ActionType.CREATE_LIST;
-  payload: { list: Column; columnOrder: string[] };
+  payload: Board;
 }
 
 interface UpdateListAction {

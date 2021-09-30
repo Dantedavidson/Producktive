@@ -10,6 +10,8 @@ export enum ActionType {
   LOAD_BOARD = 'load_board',
   LOAD_BOARD_SUCCESS = 'load_board_success',
   LOAD_BOARD_ERROR = 'load_board_error',
+  UPDATE_BOARD_SUCCESS = 'update_board_success',
+  UPDATE_BOARD_ERROR = 'update_board_error',
   CLEAR_BOARD = 'clear_board',
   CREATE_LIST = 'create_list',
   UPDATE_LIST = 'update_list',

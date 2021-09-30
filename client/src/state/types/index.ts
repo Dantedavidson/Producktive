@@ -1,3 +1,16 @@
+export interface UserState {
+  loading: boolean;
+  error: string | null;
+  token: string | null;
+  guest: boolean;
+}
+
+export interface BoardState {
+  loading: boolean;
+  error: string | null;
+  board: Board | null;
+}
+
 export type Task = {
   id: string;
   title: string;

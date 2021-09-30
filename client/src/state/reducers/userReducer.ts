@@ -1,12 +1,7 @@
 import { UserAction } from '../actions/userActions';
 import { ActionType } from '../action-types';
+import { UserState } from '../types';
 
-interface UserState {
-  loading: boolean;
-  error: string | null;
-  token: string | null;
-  guest: boolean;
-}
 export const initialUserState = {
   loading: false,
   error: null,

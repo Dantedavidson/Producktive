@@ -1,30 +1,56 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { Column } from '..';
+import { Column, Board, UserState } from '../types';
 import { ActionType } from '../action-types';
 import { ListAction } from '../actions/listActions';
+import { v4 } from 'uuid';
+import { BoardAction } from '../actions/boardActions';
 
-export const createList = (title: string, token: string) => {
-  return async (dispatch: Dispatch<ListAction>) => {
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/list`,
-        { title },
-        {
-          headers: {
-            'x-auth-token': token,
-          },
-        }
-      );
-      dispatch({
-        type: ActionType.CREATE_LIST,
-        payload: { list: data.list, columnOrder: data.columnOrder },
-      });
-    } catch (err) {
-      console.log(err);
+export const createList = (board: Board, user: UserState, title: string) => {
+  return async (dispatch: Dispatch<BoardAction>) => {
+    const newBoard: Board = Object.assign({}, board);
+    const newList: Column = {
+      id: v4(),
+      title,
+      tasks: [],
+    };
+    newBoard.columns[newList.id] = newList;
+    newBoard.columnOrder.push(newList.id);
+    dispatch({
+      type: ActionType.UPDATE_BOARD_SUCCESS,
+      payload: newBoard,
+    });
+
+    if (user.guest) {
+      localStorage.setItem('board', JSON.stringify(newBoard));
+      return;
+    }
+
+    if (user.token) {
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/list`,
+          { title },
+          {
+            headers: {
+              'x-auth-token': user.token,
+            },
+          }
+        );
+      } catch (err) {
+        dispatch({
+          type: ActionType.UPDATE_BOARD_ERROR,
+          payload: { error: 'Could not create list', board },
+        });
+      }
     }
   };
 };
+
+// dispatch({
+//   type: ActionType.CREATE_LIST,
+//   payload: { list: data.list, columnOrder: data.columnOrder },
+// });
 
 export const deleteList = (listId: string, token: string) => {
   return async (dispatch: Dispatch<ListAction>) => {

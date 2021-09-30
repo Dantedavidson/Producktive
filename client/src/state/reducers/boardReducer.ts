@@ -1,14 +1,9 @@
 import { Board } from '../types';
+import { BoardState } from '../types';
 import { BoardAction } from '../actions/boardActions';
 import { ListAction } from '../actions/listActions';
 import { ActionType } from '../action-types';
 import { ListItemAction } from '../actions/listItemActions';
-
-interface BoardState {
-  loading: boolean;
-  error: string | null;
-  board: Board | null;
-}
 
 export const initialBoardState = {
   loading: false,
@@ -28,21 +23,33 @@ const reducer = (
       return { loading: false, error: null, board: action.payload };
     case ActionType.LOAD_BOARD_ERROR:
       return { loading: false, error: action.payload, board: null };
+
     case ActionType.CLEAR_BOARD:
       return initialBoardState;
-    case ActionType.CREATE_LIST:
+
+    case ActionType.UPDATE_BOARD_SUCCESS:
+      return { loading: false, error: null, board: action.payload };
+
+    case ActionType.UPDATE_BOARD_ERROR:
       return {
         loading: false,
-        error: null,
-        board: {
-          ...board,
-          columns: {
-            ...state.board?.columns,
-            [`${action.payload.list.id}`]: action.payload.list,
-          },
-          columnOrder: action.payload.columnOrder,
-        },
+        error: action.payload.error,
+        board: action.payload.board,
       };
+
+    // case ActionType.CREATE_LIST:
+    //   return {
+    //     loading: false,
+    //     error: null,
+    //     board: {
+    //       ...board,
+    //       columns: {
+    //         ...state.board?.columns,
+    //         [`${action.payload.list.id}`]: action.payload.list,
+    //       },
+    //       columnOrder: action.payload.columnOrder,
+    //     },
+    //   };
     case ActionType.DELETE_LIST:
       return {
         loading: false,
