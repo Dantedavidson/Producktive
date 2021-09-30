@@ -43,8 +43,5 @@ export const Row = styled.div`
 `;
 
 export const Input = styled(TextareaAutosize)`
-  && {
-    min-width: 16.25rem;
-    max-width: 16.25rem;
-  }
+  width: 100%;
 `;

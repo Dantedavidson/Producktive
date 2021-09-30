@@ -41,7 +41,7 @@ const List = ({ column, tasks }: ListProps) => {
   }, [editTitle]);
   return (
     <Draggable>
-      <S.ListWrapper>
+      <S.ListWrapper className='no-indiana-scroll'>
         <S.List>
           <S.Header>
             {editTitle ? (
@@ -50,6 +50,10 @@ const List = ({ column, tasks }: ListProps) => {
                 label='Edit List Title'
                 value={title}
                 setValue={setTitle}
+                handleEnter={() => {
+                  setTitle(title);
+                  setEditTitle(false);
+                }}
               />
             ) : (
               <S.Title
@@ -91,7 +95,12 @@ const List = ({ column, tasks }: ListProps) => {
             >
               Clear List
             </S.Text>
-            <S.Text onClick={() => deleteList(column.id, token as string)}>
+            <S.Text
+              onClick={() => {
+                deleteList(column.id, token as string);
+                setModal(false);
+              }}
+            >
               Delete List
             </S.Text>
           </Modal>
@@ -104,7 +113,7 @@ const List = ({ column, tasks }: ListProps) => {
               dragClass='card-ghost'
               dropClass='card-ghost-drop'
               dropPlaceholder={{
-                animationDuration: 150,
+                animationDuration: 5000,
                 showOnTop: true,
                 className: 'card-drop-preview',
               }}

@@ -99,6 +99,7 @@ export const ListItem = ({
                       label='Edit Task Title'
                       value={title}
                       setValue={setTitle}
+                      handleEnter={() => setEditTitle(false)}
                     />
                   ) : (
                     <S.ModalTitle
@@ -133,6 +134,7 @@ export const ListItem = ({
                         buttonHandler={handleContent}
                         activeHandler={setEditDesc}
                         initial={task.content}
+                        enterHandler={handleContent}
                       />
                     ) : (
                       <S.Text

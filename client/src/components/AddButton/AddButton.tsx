@@ -34,7 +34,12 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
 
   if (btnType === 'list')
     return (
-      <S.ListButton ref={ref} active={active} onClick={() => setActive(true)}>
+      <S.ListButton
+        ref={ref}
+        active={active}
+        onClick={() => setActive(true)}
+        className='no-indiana-scroll'
+      >
         {active ? (
           <>
             <EditInput
@@ -44,6 +49,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
               buttonText='Add List'
               buttonHandler={handleList}
               activeHandler={setActive}
+              enterHandler={handleList}
             />
           </>
         ) : (
@@ -67,6 +73,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
               buttonText='Add Task'
               buttonHandler={handleListItem}
               activeHandler={setActive}
+              enterHandler={handleListItem}
             />
           </>
         ) : (

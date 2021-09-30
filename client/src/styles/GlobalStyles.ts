@@ -47,6 +47,9 @@ textarea {
     min-height:5px;
 }
  
+.drag-handle {
+    cursor:grab;
+}
 
  /* Smooth dnd placeholder styles */
  
@@ -59,6 +62,10 @@ textarea {
     background-color: rgba(150, 150, 200, 0.1);
     border: 1px dashed #abc;
     margin: 5px;
+ }
+
+ .column-ghost,.card-ghost{
+     cursor:grabbing;
  }
 
  .card-ghost{

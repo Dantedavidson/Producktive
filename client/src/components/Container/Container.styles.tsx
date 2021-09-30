@@ -18,7 +18,7 @@ interface ScrollProps {
 const Scroll = ({ children, className }: ScrollProps) => (
   <ScrollContainer
     className={className}
-    ignoreElements='.no-drag'
+    ignoreElements='.no-indiana-scroll'
     hideScrollbars={false}
   >
     {children}

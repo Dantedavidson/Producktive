@@ -66,9 +66,7 @@ export const clearList = (listId: string, token: string) => {
         columnOrder: data.columnOrder,
       };
       dispatch({ type: ActionType.CLEAR_LIST, payload: newState });
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 };
 

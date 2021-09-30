@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
+import { Input } from '../index';
 import * as S from './EditInput.styles';
 interface Props {
   input: string;
@@ -9,6 +10,7 @@ interface Props {
   inputHandler: React.Dispatch<React.SetStateAction<string>>;
   activeHandler: React.Dispatch<React.SetStateAction<boolean>>;
   buttonHandler: () => void;
+  enterHandler: () => void;
 }
 
 const EditInput = ({
@@ -19,13 +21,15 @@ const EditInput = ({
   inputHandler,
   buttonHandler,
   activeHandler,
+  enterHandler,
 }: Props) => {
   return (
     <>
-      <S.Input
-        aria-label={label}
-        onChange={e => inputHandler(e.target.value)}
+      <Input
+        label={label}
         value={input}
+        setValue={inputHandler}
+        handleEnter={enterHandler}
       />
       <S.Row>
         <Button
@@ -51,3 +55,24 @@ const EditInput = ({
 };
 
 export default EditInput;
+
+{
+  /* <S.Input
+        aria-label={label}
+        onChange={e => inputHandler(e.target.value)}
+        value={input}
+        autoFocus
+        onFocus={e =>
+          e.currentTarget.setSelectionRange(
+            e.currentTarget.value.length,
+            e.currentTarget.value.length
+          )
+        }
+        onKeyPress={e => {
+          console.log(e.key);
+          if (e.key === 'Enter') {
+            e.preventDefault();
+          }
+        }}
+      /> */
+}

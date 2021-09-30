@@ -7,7 +7,10 @@ export const useOutsideClick = (
 ) => {
   useEffect(() => {
     function handleClick(e: any) {
-      if (excludeRef?.current?.contains(e.target)) return;
+      if (excludeRef?.current?.contains(e.target)) {
+        console.log('exclude ref,returning');
+        return;
+      }
       if (ref.current && !ref.current.contains(e.target)) {
         setActive(false);
       }

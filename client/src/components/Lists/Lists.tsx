@@ -29,6 +29,7 @@ const Lists = () => {
         showOnTop: true,
         className: 'column-drop-preview',
       }}
+      dragClass='column-ghost'
       nonDragAreaSelector='no-drag'
     >
       {columnOrder.map((col, index) => {
