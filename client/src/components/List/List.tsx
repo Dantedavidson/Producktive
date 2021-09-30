@@ -113,7 +113,7 @@ const List = ({ column, tasks }: ListProps) => {
               dragClass='card-ghost'
               dropClass='card-ghost-drop'
               dropPlaceholder={{
-                animationDuration: 5000,
+                animationDuration: 150,
                 showOnTop: true,
                 className: 'card-drop-preview',
               }}
