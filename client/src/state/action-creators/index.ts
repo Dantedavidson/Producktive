@@ -1,4 +1,4 @@
-export { logoutUser, loginUser, signupUser } from './userCreator';
+export { logoutUser, loginUser, signupUser, loginGuest } from './userCreator';
 export {
   createList,
   reorderList,

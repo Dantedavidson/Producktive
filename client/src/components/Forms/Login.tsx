@@ -1,6 +1,5 @@
 import * as S from './Form.styles';
 import { Input } from './FormComponents';
-
 import { Header } from '../index';
 import { useActions } from '../../hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -14,7 +13,7 @@ interface FormInputs {
 }
 const Login = ({ setView }: Props) => {
   const { control, handleSubmit } = useForm();
-  const { loginUser } = useActions();
+  const { loginUser, loginGuest } = useActions();
   const onSubmit: SubmitHandler<FormInputs> = data => {
     loginUser(data);
   };
@@ -48,6 +47,10 @@ const Login = ({ setView }: Props) => {
         Need an account?{' '}
         <S.Anchor onClick={() => setView('signup')}>Signup</S.Anchor>
       </S.Text>
+      <S.Text $center>OR</S.Text>
+      <S.FormButton variant='contained' color='primary' onClick={loginGuest}>
+        Guest Login
+      </S.FormButton>
     </S.Container>
   );
 };

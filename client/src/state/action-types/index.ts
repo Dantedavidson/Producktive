@@ -6,6 +6,7 @@ export enum ActionType {
   LOGIN_USER_SUCCESS = 'login_user_success',
   LOGIN_USER_ERROR = 'login_user_error',
   LOGOUT_USER = 'logout_user',
+  LOGIN_GUEST_SUCCESS = 'login_guest_success',
   LOAD_BOARD = 'load_board',
   LOAD_BOARD_SUCCESS = 'load_board_success',
   LOAD_BOARD_ERROR = 'load_board_error',

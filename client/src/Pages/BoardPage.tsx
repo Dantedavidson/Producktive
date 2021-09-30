@@ -5,7 +5,7 @@ import { Header, Container } from '../components';
 const BoardPage = () => {
   const user = useAppSelector(state => state.user);
 
-  if (!user.token) return <Redirect to='/' />;
+  if (!user.token && !user.guest) return <Redirect to='/' />;
   return (
     <>
       <Header />

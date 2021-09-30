@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { ActionType } from '../action-types';
 import { UserAction } from '../actions/userActions';
 import { BoardAction } from '../actions/boardActions';
-
+import { Board } from '../types';
 interface UserDetails {
   username: string;
   password: string;
@@ -132,5 +132,37 @@ export const signupUser = (userDetails: UserDetails) => {
         toastId: 'Signup-error',
       });
     }
+  };
+};
+
+export const loginGuest = () => {
+  return (dispatch: Dispatch<UserAction | BoardAction>) => {
+    dispatch({
+      type: ActionType.LOGIN_USER,
+    });
+    dispatch({
+      type: ActionType.LOAD_BOARD,
+    });
+
+    const board = localStorage.getItem('board');
+    if (board === null) {
+      const newBoard: Board = {
+        id: 'local board',
+        tasks: {},
+        columns: {},
+        columnOrder: [],
+      };
+      localStorage.setItem('board', JSON.stringify(newBoard));
+      dispatch({
+        type: ActionType.LOAD_BOARD_SUCCESS,
+        payload: newBoard,
+      });
+    } else {
+      dispatch({
+        type: ActionType.LOAD_BOARD_SUCCESS,
+        payload: JSON.parse(board),
+      });
+    }
+    dispatch({ type: ActionType.LOGIN_GUEST_SUCCESS });
   };
 };

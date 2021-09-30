@@ -22,6 +22,9 @@ interface LoginUserErrorAction {
   type: ActionType.LOGIN_USER_ERROR;
   payload: string;
 }
+interface LoginGuestSuccessAction {
+  type: ActionType.LOGIN_GUEST_SUCCESS;
+}
 interface LogoutUserAction {
   type: ActionType.LOGOUT_USER;
 }
@@ -33,4 +36,5 @@ export type UserAction =
   | LoginUserAction
   | LoginUserSuccessAction
   | LoginUserErrorAction
+  | LoginGuestSuccessAction
   | LogoutUserAction;
