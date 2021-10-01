@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Container, Draggable, DropResult } from 'react-smooth-dnd';
 import { MoreHoriz } from '@material-ui/icons';
 import { ListItem, AddButton, Input } from '../index';
-import { Column, Task } from '../../state';
+import { Board, Column, Task } from '../../state';
 import { applyDrag } from '../../utility';
 import { useActions, useAppSelector, useOutsideClick } from '../../hooks';
 import Modal from '../Modal/Modal';
@@ -19,16 +19,16 @@ const List = ({ column, tasks }: ListProps) => {
   const [editTitle, setEditTitle] = useState(false);
   const [title, setTitle] = useState(column.title);
   const { deleteList, updateList, clearList, copyList } = useActions();
-  const { token } = useAppSelector(state => state.user);
+  const { board: boardState, user: userState } = useAppSelector(state => state);
   const titleRef = useRef(null);
   const ellipseRef = useRef(null);
 
   const onTaskDrop = (dropResult: DropResult) => {
     const { removedIndex, addedIndex } = dropResult;
-    if ((removedIndex !== null || addedIndex !== null) && token) {
+    if ((removedIndex !== null || addedIndex !== null) && userState.token) {
       const newColumn = Object.assign({}, column);
       const newTaskIds = applyDrag(newColumn.tasks, dropResult);
-      updateList({ ...newColumn, tasks: newTaskIds }, token);
+      updateList({ ...newColumn, tasks: newTaskIds }, userState.token);
     }
   };
   const getChildPayload = (index: number) => {
@@ -36,8 +36,8 @@ const List = ({ column, tasks }: ListProps) => {
   };
   useOutsideClick(titleRef, setEditTitle);
   useEffect(() => {
-    if (!token || title === column.title || !title) return;
-    updateList({ ...column, title }, token);
+    if (!userState.token || title === column.title || !title) return;
+    updateList({ ...column, title }, userState.token);
   }, [editTitle]);
   return (
     <Draggable>
@@ -81,7 +81,7 @@ const List = ({ column, tasks }: ListProps) => {
             <S.Text $isTitle>List Actions</S.Text>
             <S.Text
               onClick={() => {
-                copyList(column.id, token as string);
+                copyList(column.id, userState.token as string);
                 setModal(false);
               }}
             >
@@ -89,7 +89,7 @@ const List = ({ column, tasks }: ListProps) => {
             </S.Text>
             <S.Text
               onClick={() => {
-                clearList(column.id, token as string);
+                clearList(column.id, userState.token as string);
                 setModal(false);
               }}
             >
@@ -97,7 +97,7 @@ const List = ({ column, tasks }: ListProps) => {
             </S.Text>
             <S.Text
               onClick={() => {
-                deleteList(column.id, token as string);
+                deleteList(boardState.board as Board, userState, column.id);
                 setModal(false);
               }}
             >

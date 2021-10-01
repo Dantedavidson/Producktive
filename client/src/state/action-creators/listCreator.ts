@@ -47,30 +47,32 @@ export const createList = (board: Board, user: UserState, title: string) => {
   };
 };
 
-// dispatch({
-//   type: ActionType.CREATE_LIST,
-//   payload: { list: data.list, columnOrder: data.columnOrder },
-// });
+export const deleteList = (board: Board, user: UserState, id: string) => {
+  return async (dispatch: Dispatch<BoardAction>) => {
+    const newBoard: Board = Object.assign({}, board);
+    delete newBoard.columns[id];
+    newBoard.columnOrder = board.columnOrder.filter(col => col !== id);
 
-export const deleteList = (listId: string, token: string) => {
-  return async (dispatch: Dispatch<ListAction>) => {
-    try {
-      const { data } = await axios.delete(
-        `${process.env.REACT_APP_SERVER_URL}/list/${listId}`,
-        {
+    dispatch({ type: ActionType.UPDATE_BOARD_SUCCESS, payload: newBoard });
+
+    if (user.guest) {
+      localStorage.setItem('board', JSON.stringify(newBoard));
+      return;
+    }
+    if (user.token) {
+      try {
+        await axios.delete(`${process.env.REACT_APP_SERVER_URL}/list/${id}`, {
           headers: {
-            'x-auth-token': token,
+            'x-auth-token': user.token,
           },
-        }
-      );
-      const newState = {
-        id: data._id,
-        tasks: data.tasks,
-        columns: data.columns,
-        columnOrder: data.columnOrder,
-      };
-      dispatch({ type: ActionType.DELETE_LIST, payload: newState });
-    } catch (err) {}
+        });
+      } catch (err) {
+        dispatch({
+          type: ActionType.UPDATE_BOARD_ERROR,
+          payload: { error: 'Could not delete list.', board },
+        });
+      }
+    }
   };
 };
 
