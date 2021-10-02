@@ -81,7 +81,7 @@ const List = ({ column, tasks }: ListProps) => {
             <S.Text $isTitle>List Actions</S.Text>
             <S.Text
               onClick={() => {
-                copyList(column.id, userState.token as string);
+                copyList(boardState.board as Board, column, userState);
                 setModal(false);
               }}
             >
@@ -89,7 +89,7 @@ const List = ({ column, tasks }: ListProps) => {
             </S.Text>
             <S.Text
               onClick={() => {
-                clearList(column.id, userState.token as string);
+                clearList(boardState.board as Board, column, userState);
                 setModal(false);
               }}
             >

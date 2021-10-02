@@ -76,54 +76,99 @@ export const deleteList = (board: Board, user: UserState, id: string) => {
   };
 };
 
-export const clearList = (listId: string, token: string) => {
-  return async (dispatch: Dispatch<ListAction>) => {
-    try {
-      const { data } = await axios.delete(
-        `${process.env.REACT_APP_SERVER_URL}/list/clear/${listId}`,
-        {
-          headers: {
-            'x-auth-token': token,
-          },
-        }
-      );
-      const newState = {
-        id: data._id,
-        tasks: data.tasks,
-        columns: data.columns,
-        columnOrder: data.columnOrder,
-      };
-      dispatch({ type: ActionType.CLEAR_LIST, payload: newState });
-    } catch (err) {}
-  };
-};
+export const clearList = (board: Board, list: Column, user: UserState) => {
+  return async (dispatch: Dispatch<BoardAction>) => {
+    const newBoard: Board = Object.assign({}, board);
+    const newList: Column = Object.assign({}, list);
 
-export const copyList = (listId: string, token: string) => {
-  return async (dispatch: Dispatch<ListAction>) => {
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/list/copy`,
-        {
-          listId,
-        },
-        {
-          headers: {
-            'x-auth-token': token,
-          },
-        }
-      );
-      const board = {
-        id: data._id,
-        tasks: data.tasks,
-        columns: data.columns,
-        columnOrder: data.columnOrder,
-      };
-      dispatch({ type: ActionType.COPY_LIST, payload: board });
-    } catch (err) {
-      console.log(err);
+    newList.tasks = [];
+    list.tasks.forEach(task => {
+      delete newBoard.tasks[task];
+    });
+
+    newBoard.columns[list.id] = newList;
+
+    dispatch({ type: ActionType.UPDATE_BOARD_SUCCESS, payload: newBoard });
+    if (user.guest) {
+      localStorage.setItem('board', JSON.stringify(newBoard));
+      return;
+    }
+    if (user.token) {
+      try {
+        await axios.delete(
+          `${process.env.REACT_APP_SERVER_URL}/list/clear/${list.id}`,
+          {
+            headers: {
+              'x-auth-token': user.token,
+            },
+          }
+        );
+      } catch (err) {
+        dispatch({
+          type: ActionType.UPDATE_BOARD_ERROR,
+          payload: { error: 'Could not clear list.', board },
+        });
+      }
     }
   };
 };
+
+export const copyList = (board: Board, list: Column, user: UserState) => {
+  return async (dispatch: Dispatch<BoardAction>) => {
+    console.log(process.env.REACT_APP_SERVER_URL);
+    const newBoard: Board = Object.assign({}, board);
+    const newTaskIds: string[] = [];
+
+    list.tasks.forEach(task => {
+      const newTask = Object.assign({}, board.tasks[task]);
+      newTask.id = v4();
+      newBoard.tasks[newTask.id] = newTask;
+      newTaskIds.push(newTask.id);
+    });
+
+    const newList: Column = Object.assign({}, list);
+    newList.id = v4();
+    newList.tasks = newTaskIds;
+    newBoard.columns[newList.id] = newList;
+
+    const startIndex = board.columnOrder.indexOf(list.id);
+    newBoard.columnOrder.splice(startIndex, 0, newList.id);
+
+    dispatch({ type: ActionType.UPDATE_BOARD_SUCCESS, payload: newBoard });
+
+    if (user.guest)
+      return localStorage.setItem('board', JSON.stringify(newBoard));
+
+    if (user.token) {
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/list/copy`,
+          {
+            listId: list.id,
+          },
+          {
+            headers: {
+              'x-auth-token': user.token,
+            },
+          }
+        );
+      } catch (err) {
+        dispatch({
+          type: ActionType.UPDATE_BOARD_ERROR,
+          payload: { error: 'Could not copy list.', board },
+        });
+      }
+    }
+  };
+};
+
+// const board = {
+//   id: data._id,
+//   tasks: data.tasks,
+//   columns: data.columns,
+//   columnOrder: data.columnOrder,
+// };
+// dispatch({ type: ActionType.COPY_LIST, payload: board });
 
 export const reorderList = (columnOrder: string[], token: string) => {
   return async (dispatch: Dispatch<ListAction>) => {

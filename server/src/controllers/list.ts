@@ -13,6 +13,7 @@ export const createList = async function (req: Request, res: Response) {
     if (!board) throw 'Error creating list';
     const list = ListService.create(req.body.title);
     const update = await ListService.addToBoard(board, list);
+    console.log(update.columnOrder);
 
     return res.send({
       columnOrder: update.columnOrder,
@@ -41,9 +42,11 @@ export const copyList = async function (req: Request, res: Response) {
         oldTask.status
       );
       newList.tasks.push(newTask.id);
+
       await ListItemService.addToTasks(board, newTask);
     }
-    const update = await ListService.addToBoard(board, newList);
+    const startIndex = board.columnOrder.indexOf(req.body.listId);
+    const update = await ListService.addToBoard(board, newList, startIndex);
     return res.send(update);
   } catch (err) {
     console.log(err);
@@ -91,7 +94,6 @@ export const clearList = async function (req: Request, res: Response) {
     const update = await ListService.clear(board, list);
     return res.send(update);
   } catch (err) {
-    console.log(err);
     return res.status(400).send(err);
   }
 };
