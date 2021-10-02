@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { Column, Board, UserState } from '../types';
 import { ActionType } from '../action-types';
-import { ListAction } from '../actions/listActions';
 import { v4 } from 'uuid';
 import { BoardAction } from '../actions/boardActions';
 
@@ -30,7 +29,7 @@ export const createList = (board: Board, user: UserState, title: string) => {
       try {
         await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/list`,
-          { title },
+          { list: newList },
           {
             headers: {
               'x-auth-token': user.token,
@@ -162,46 +161,63 @@ export const copyList = (board: Board, list: Column, user: UserState) => {
   };
 };
 
-export const reorderList = (columnOrder: string[], token: string) => {
-  return async (dispatch: Dispatch<ListAction>) => {
+export const reorderList = (
+  board: Board,
+  columnOrder: string[],
+  userState: UserState
+) => {
+  return async (dispatch: Dispatch<BoardAction>) => {
+    const newBoard = Object.assign({}, board);
+    newBoard.columnOrder = columnOrder;
+
+    dispatch({ type: ActionType.UPDATE_BOARD_SUCCESS, payload: newBoard });
+
+    if (userState.guest)
+      return localStorage.setItem('board', JSON.stringify(newBoard));
     try {
-      dispatch({
-        type: ActionType.REORDER_LIST,
-        payload: columnOrder,
-      });
       await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/list/reorder`,
         { columnOrder },
         {
           headers: {
-            'x-auth-token': token,
+            'x-auth-token': userState.token,
           },
         }
       );
     } catch (err) {
-      console.log(err);
+      dispatch({ type: ActionType.UPDATE_BOARD_SUCCESS, payload: board });
     }
   };
 };
 
-export const updateList = (list: Column, token: string) => {
-  return async (dispatch: Dispatch<ListAction>) => {
+export const updateList = (
+  board: Board,
+  list: Column,
+  userState: UserState
+) => {
+  return async (dispatch: Dispatch<BoardAction>) => {
+    const newBoard = Object.assign({}, board);
+    newBoard.columns[list.id] = list;
+
+    dispatch({ type: ActionType.UPDATE_BOARD_SUCCESS, payload: newBoard });
+    if (userState.guest)
+      return localStorage.setItem('board', JSON.stringify(newBoard));
+
     try {
-      dispatch({
-        type: ActionType.UPDATE_LIST,
-        payload: list,
-      });
       await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/list/update`,
         { list },
         {
           headers: {
-            'x-auth-token': token,
+            'x-auth-token': userState.token,
           },
         }
       );
     } catch (err) {
-      console.log(err);
+      dispatch({
+        type: ActionType.UPDATE_BOARD_ERROR,
+        payload: { error: 'Could not update list', board },
+      });
     }
   };
 };

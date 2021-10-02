@@ -107,6 +107,7 @@ export const ListItem = ({
                     />
                   ) : (
                     <S.ModalTitle
+                      className='allow-text-select'
                       onClick={() => setEditTitle(true)}
                       style={{ cursor: 'pointer' }}
                     >
@@ -142,6 +143,7 @@ export const ListItem = ({
                       />
                     ) : (
                       <S.Text
+                        className='allow-text-select'
                         $content={task.content}
                         onClick={() => {
                           setEditDesc(true);

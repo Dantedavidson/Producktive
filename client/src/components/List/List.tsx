@@ -25,10 +25,14 @@ const List = ({ column, tasks }: ListProps) => {
 
   const onTaskDrop = (dropResult: DropResult) => {
     const { removedIndex, addedIndex } = dropResult;
-    if ((removedIndex !== null || addedIndex !== null) && userState.token) {
+    if (removedIndex !== null || addedIndex !== null) {
       const newColumn = Object.assign({}, column);
       const newTaskIds = applyDrag(newColumn.tasks, dropResult);
-      updateList({ ...newColumn, tasks: newTaskIds }, userState.token);
+      updateList(
+        boardState.board as Board,
+        { ...newColumn, tasks: newTaskIds },
+        userState
+      );
     }
   };
   const getChildPayload = (index: number) => {
@@ -36,8 +40,8 @@ const List = ({ column, tasks }: ListProps) => {
   };
   useOutsideClick(titleRef, setEditTitle);
   useEffect(() => {
-    if (!userState.token || title === column.title || !title) return;
-    updateList({ ...column, title }, userState.token);
+    if (title === column.title || !title) return;
+    updateList(boardState.board as Board, { ...column, title }, userState);
   }, [editTitle]);
   return (
     <Draggable>

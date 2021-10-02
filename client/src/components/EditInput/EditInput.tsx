@@ -1,6 +1,8 @@
+import { useRef } from 'react';
 import { Button } from '@material-ui/core';
 import { CloseRounded } from '@material-ui/icons';
 import { Input } from '../index';
+import { useOutsideClick } from '../../hooks';
 import * as S from './EditInput.styles';
 interface Props {
   input: string;
@@ -23,8 +25,10 @@ const EditInput = ({
   activeHandler,
   enterHandler,
 }: Props) => {
+  const ref = useRef<any>(null);
+  useOutsideClick(ref, activeHandler);
   return (
-    <>
+    <S.Container ref={ref}>
       <Input
         label={label}
         value={input}
@@ -50,7 +54,7 @@ const EditInput = ({
           }}
         />
       </S.Row>
-    </>
+    </S.Container>
   );
 };
 

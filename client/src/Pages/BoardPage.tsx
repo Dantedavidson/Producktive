@@ -3,9 +3,10 @@ import { useAppSelector } from '../hooks';
 import { Header, Container } from '../components';
 
 const BoardPage = () => {
-  const user = useAppSelector(state => state.user);
+  const { user: userState, board: boardState } = useAppSelector(state => state);
 
-  if (!user.token && !user.guest) return <Redirect to='/' />;
+  if ((!userState.token && !userState.guest) || boardState.board === null)
+    return <Redirect to='/' />;
   return (
     <>
       <Header />

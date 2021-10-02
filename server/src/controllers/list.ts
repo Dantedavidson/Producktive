@@ -6,18 +6,16 @@ import * as ListItemService from '../services/listItem';
 
 export const createList = async function (req: Request, res: Response) {
   try {
-    const { error } = validateColumn({ title: req.body.title });
+    const { error } = validateColumn(req.body.list);
     if (error) throw error;
     const { board: boardToken } = req.token;
     const board = await BoardService.find(boardToken);
     if (!board) throw 'Error creating list';
-    const list = ListService.create(req.body.title);
-    const update = await ListService.addToBoard(board, list);
-    console.log(update.columnOrder);
+    const update = await ListService.addToBoard(board, req.body.list);
 
     return res.send({
       columnOrder: update.columnOrder,
-      list: update.columns.get(list.id),
+      list: update.columns.get(req.body.list.id),
     });
   } catch (err) {
     return res.send(err);

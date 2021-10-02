@@ -6,7 +6,7 @@ import * as ListItemService from '../services/listItem';
 
 export const createTask = async function (req: Request, res: Response) {
   try {
-    const { error } = validateTask({ title: req.body.title });
+    const { error } = validateTask(req.body.task);
     if (error) throw error;
     const { board: boardToken } = req.token;
     const board = await BoardService.find(boardToken);
@@ -14,9 +14,8 @@ export const createTask = async function (req: Request, res: Response) {
     const list = await ListService.find(board, req.body.listId);
     if (!list) throw 'Error creating task';
 
-    const task = ListItemService.create(req.body.title);
-    await ListItemService.addToList(board, list, task.id);
-    const updateTasks = await ListItemService.addToTasks(board, task);
+    await ListItemService.addToList(board, list, req.body.task.id);
+    const updateTasks = await ListItemService.addToTasks(board, req.body.task);
     return res.send(updateTasks);
   } catch (err) {
     return res.send(err);

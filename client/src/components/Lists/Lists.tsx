@@ -10,12 +10,9 @@ const Lists = () => {
   const { columnOrder, columns, tasks } = boardState.board as Board;
   const onColumnDrop = (dropResult: DropResult) => {
     const { removedIndex, addedIndex } = dropResult;
-    if (
-      (removedIndex !== null || addedIndex !== null) &&
-      userState.token !== null
-    ) {
+    if (removedIndex !== null || addedIndex !== null) {
       const newColumnOrder = applyDrag(columnOrder, dropResult);
-      reorderList(newColumnOrder, userState.token);
+      reorderList(boardState.board as Board, newColumnOrder, userState);
     }
   };
   return (

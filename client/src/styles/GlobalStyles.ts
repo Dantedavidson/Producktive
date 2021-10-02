@@ -9,12 +9,12 @@ export default createGlobalStyle`
     margin:0;
     padding:0;
     //Remove text select
-    /* -webkit-touch-callout: none; 
+    -webkit-touch-callout: none; 
     -webkit-user-select: none; 
     -khtml-user-select: none; 
     -moz-user-select: none; 
     -ms-user-select: none; 
-    user-select: none;  */
+    user-select: none;  
 
 }
 body{
@@ -41,6 +41,17 @@ textarea {
     :focus-visible {
       outline: none;
     }
+}
+
+
+   
+.allow-text-select {
+    -webkit-touch-callout: text; 
+    -webkit-user-select: text; 
+    -khtml-user-select: text; 
+    -moz-user-select: text; 
+    -ms-user-select: text; 
+    user-select: text;  
 }
 
 .smooth-dnd-container{
@@ -71,9 +82,5 @@ textarea {
  .card-ghost{
      transform: rotate(3deg);
  }
-
- 
-
-
 
 `;

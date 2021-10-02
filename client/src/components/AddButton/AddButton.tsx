@@ -16,10 +16,6 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
   const { createList, createListItem } = useActions();
   const { user: userState, board: boardState } = useAppSelector(state => state);
 
-  const ref = useRef<any>(null);
-
-  useOutsideClick(ref, setActive);
-
   const handleList = () => {
     if (!input) return;
     setInput('');
@@ -37,7 +33,6 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
   if (btnType === 'list')
     return (
       <S.ListButton
-        ref={ref}
         active={active}
         onClick={() => setActive(true)}
         className='no-indiana-scroll'
@@ -65,7 +60,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
     );
   else
     return (
-      <S.ItemButton ref={ref} active={active} onClick={() => setActive(true)}>
+      <S.ItemButton active={active} onClick={() => setActive(true)}>
         {active ? (
           <>
             <EditInput
@@ -80,7 +75,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
           </>
         ) : (
           <>
-            <S.Wrap>
+            <S.Wrap className='no-text-select'>
               <AddRounded /> New Task
             </S.Wrap>
           </>

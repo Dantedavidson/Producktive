@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import { useAppSelector } from '../hooks';
-import { Login, Signup } from '../components';
+import { Login, Signup, Loading } from '../components';
 import { Redirect } from 'react-router';
 
 const LoginPage = () => {
   const [view, setView] = useState<'login' | 'signup'>('login');
-  const user = useAppSelector(state => state.user);
+  const { user: userState, board: boardState } = useAppSelector(state => state);
 
-  if (user.token || user.guest) return <Redirect to='/Board' />;
+  if (
+    (userState.token || userState.guest) &&
+    boardState.board !== null &&
+    !boardState.loading
+  )
+    return <Redirect to='/Board' />;
+
+  if (boardState.loading) return <Loading />;
   return view === 'login' ? (
     <Login setView={setView} />
   ) : (

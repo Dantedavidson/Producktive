@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { Board, Column, Task, UserState } from '../types';
 import { ActionType } from '../action-types';
-import { ListItemAction } from '../actions/listItemActions';
 import { BoardAction } from '../actions/boardActions';
 import { v4 } from 'uuid';
 
@@ -36,7 +35,7 @@ export const createListItem = (
       try {
         axios.post(
           `${process.env.REACT_APP_SERVER_URL}/listItem`,
-          { title, listId },
+          { task: newTask, listId },
           {
             headers: {
               'x-auth-token': userState.token,
