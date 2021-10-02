@@ -9,7 +9,6 @@ export {
 } from './listCreator';
 export {
   createListItem,
-  moveListItem,
   deleteListItem,
   updateListItem,
 } from './listItemCreator';

@@ -162,14 +162,6 @@ export const copyList = (board: Board, list: Column, user: UserState) => {
   };
 };
 
-// const board = {
-//   id: data._id,
-//   tasks: data.tasks,
-//   columns: data.columns,
-//   columnOrder: data.columnOrder,
-// };
-// dispatch({ type: ActionType.COPY_LIST, payload: board });
-
 export const reorderList = (columnOrder: string[], token: string) => {
   return async (dispatch: Dispatch<ListAction>) => {
     try {

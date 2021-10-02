@@ -14,7 +14,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
   const [active, setActive] = useState(false);
   const [input, setInput] = useState('');
   const { createList, createListItem } = useActions();
-  const { user, board } = useAppSelector(state => state);
+  const { user: userState, board: boardState } = useAppSelector(state => state);
 
   const ref = useRef<any>(null);
 
@@ -24,14 +24,14 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
     if (!input) return;
     setInput('');
     setActive(false);
-    createList(board.board as Board, user, input);
+    createList(boardState.board as Board, userState, input);
   };
 
   const handleListItem = () => {
-    if (!user.token || !input || !listId) return;
+    if (!input || !listId) return;
     setInput('');
     setActive(false);
-    createListItem(listId, input, user.token);
+    createListItem(boardState.board as Board, listId, input, userState);
   };
 
   if (btnType === 'list')

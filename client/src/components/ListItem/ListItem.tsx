@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import * as S from './ListItem.styles';
-import { Task, Column } from '../../state';
+import { Task, Column, Board } from '../../state';
 import { EditInput, Modal, Input } from '..';
 import { Draggable } from 'react-smooth-dnd';
 import { useAppSelector, useActions, useOutsideClick } from '../../hooks';
@@ -17,26 +17,24 @@ export const ListItem = ({
   const [editDesc, setEditDesc] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [editTitle, setEditTitle] = useState(false);
-  const { token } = useAppSelector(state => state.user);
+  const { board: boardState, user: userState } = useAppSelector(state => state);
   const { updateListItem, deleteListItem } = useActions();
   const titleRef = useRef(null);
   const handleContent = () => {
-    if (!token) return;
     const updateTask = { ...task, content: content };
-    updateListItem(updateTask, token);
+    updateListItem(boardState.board as Board, updateTask, userState);
     setEditDesc(false);
   };
   const handleDelete = () => {
-    if (!token) return;
     setModal(false);
-    deleteListItem(task.id, list.id, token);
+    deleteListItem(boardState.board as Board, task.id, list.id, userState);
   };
 
   useOutsideClick(titleRef, setEditTitle);
 
   useEffect(() => {
-    if (!token || title === task.title || !title) return;
-    updateListItem({ ...task, title }, token);
+    if (!userState.token || title === task.title || !title) return;
+    updateListItem(boardState.board as Board, { ...task, title }, userState);
   }, [editTitle]);
 
   useEffect(() => {
@@ -58,16 +56,22 @@ export const ListItem = ({
                 <S.Complete
                   fontSize='small'
                   onClick={() => {
-                    if (!token) return;
-                    updateListItem({ ...task, status: false }, token);
+                    updateListItem(
+                      boardState.board as Board,
+                      { ...task, status: false },
+                      userState
+                    );
                   }}
                 />
               ) : (
                 <S.Incomplete
                   fontSize='small'
                   onClick={() => {
-                    if (!token) return;
-                    updateListItem({ ...task, status: true }, token);
+                    updateListItem(
+                      boardState.board as Board,
+                      { ...task, status: true },
+                      userState
+                    );
                   }}
                 />
               )}
