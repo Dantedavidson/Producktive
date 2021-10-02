@@ -7,6 +7,8 @@ import { BoardAction } from '../actions/boardActions';
 
 export const createList = (board: Board, user: UserState, title: string) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard: Board = Object.assign({}, board);
     const newList: Column = {
       id: v4(),
@@ -48,6 +50,8 @@ export const createList = (board: Board, user: UserState, title: string) => {
 
 export const deleteList = (board: Board, user: UserState, id: string) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard: Board = Object.assign({}, board);
     delete newBoard.columns[id];
     newBoard.columnOrder = board.columnOrder.filter(col => col !== id);
@@ -77,6 +81,8 @@ export const deleteList = (board: Board, user: UserState, id: string) => {
 
 export const clearList = (board: Board, list: Column, user: UserState) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard: Board = Object.assign({}, board);
     const newList: Column = Object.assign({}, list);
 
@@ -114,7 +120,8 @@ export const clearList = (board: Board, list: Column, user: UserState) => {
 
 export const copyList = (board: Board, list: Column, user: UserState) => {
   return async (dispatch: Dispatch<BoardAction>) => {
-    console.log(process.env.REACT_APP_SERVER_URL);
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard: Board = Object.assign({}, board);
     const newTaskIds: string[] = [];
 
@@ -167,6 +174,8 @@ export const reorderList = (
   userState: UserState
 ) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard = Object.assign({}, board);
     newBoard.columnOrder = columnOrder;
 
@@ -196,6 +205,8 @@ export const updateList = (
   userState: UserState
 ) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard = Object.assign({}, board);
     newBoard.columns[list.id] = list;
 

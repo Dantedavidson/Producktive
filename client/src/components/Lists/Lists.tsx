@@ -30,6 +30,7 @@ const Lists = () => {
       nonDragAreaSelector='no-drag'
     >
       {columnOrder.map((col, index) => {
+        console.log(col);
         const column = columns[col];
         const colTasks = column.tasks.map((taskIds: string) => tasks[taskIds]);
 

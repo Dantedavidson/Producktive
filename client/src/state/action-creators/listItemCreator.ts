@@ -12,6 +12,8 @@ export const createListItem = (
   userState: UserState
 ) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard: Board = Object.assign({}, board);
     const newList: Column = Object.assign({}, board.columns[listId]);
 
@@ -58,6 +60,8 @@ export const updateListItem = (
   userState: UserState
 ) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard = Object.assign({}, board);
     newBoard.tasks[task.id] = task;
 
@@ -93,6 +97,8 @@ export const deleteListItem = (
   userState: UserState
 ) => {
   return async (dispatch: Dispatch<BoardAction>) => {
+    dispatch({ type: ActionType.UPDATE_BOARD });
+
     const newBoard: Board = Object.assign({}, board);
     const newList: Column = Object.assign({}, board.columns[listId]);
 

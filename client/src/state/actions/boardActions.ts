@@ -15,6 +15,10 @@ interface LoadBoardErrorAction {
   payload: string;
 }
 
+interface UpdateBoardAction {
+  type: ActionType.UPDATE_BOARD;
+}
+
 interface UpdateBoardSuccessAction {
   type: ActionType.UPDATE_BOARD_SUCCESS;
   payload: Board;
@@ -33,6 +37,7 @@ export type BoardAction =
   | LoadBoardAction
   | LoadBoardSuccessAction
   | LoadBoardErrorAction
+  | UpdateBoardAction
   | UpdateBoardSuccessAction
   | UpdateBoardErrorAction
   | ClearBoardAction;
