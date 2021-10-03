@@ -11,6 +11,7 @@ interface Props {
 const Input = React.forwardRef<any, Props>((props, ref) => {
   return (
     <StyledInput
+      className='allow-text-select'
       ref={ref}
       onFocus={e =>
         e.currentTarget.setSelectionRange(

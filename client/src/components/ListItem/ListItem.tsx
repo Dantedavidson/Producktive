@@ -115,7 +115,9 @@ export const ListItem = ({
                     </S.ModalTitle>
                   )}
                 </S.Row>
-                <S.SmallText>Item in {list.title}</S.SmallText>
+                <S.SmallText>
+                  Task in <S.Highlight>{list.title}</S.Highlight>
+                </S.SmallText>
 
                 {/* Modal Item Description */}
                 <S.Grid>
@@ -157,7 +159,7 @@ export const ListItem = ({
                   </S.Column>
                   <S.Column>
                     <S.Row>
-                      <S.ModalTitle>Item Actions</S.ModalTitle>
+                      <S.ModalTitle>Task Actions</S.ModalTitle>
                     </S.Row>
                     <S.Button
                       onClick={handleDelete}

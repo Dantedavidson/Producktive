@@ -74,9 +74,15 @@ export const SmallText = styled.p`
   color: rgba(69, 68, 68, 0.6);
 `;
 
+export const Highlight = styled.strong`
+  color: rgb(69, 68, 68);
+`;
+
 export const Text = styled.p<{ $content?: string }>`
   background-color: ${props => !props.$content && '#091e420a'};
   font-size: 0.875rem;
+  padding: 0.4rem 0.3rem;
+  border-radius: 5px;
 
   cursor: pointer;
   &:hover {
