@@ -32,7 +32,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route exact path='/board' component={BoardPage} />
-            <Route path='/' component={LoginPage} />
+            <Route exact path='/' component={LoginPage} />
             <Route path='/404' component={NotFound} />
             <Redirect to='/404' />
           </Switch>
