@@ -51,7 +51,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
           </>
         ) : (
           <>
-            <S.Wrap>
+            <S.Wrap className='stop-text-select'>
               <AddRounded /> New List
             </S.Wrap>
           </>
@@ -75,7 +75,7 @@ const AddButton = ({ btnType, listId }: AddButtonProps) => {
           </>
         ) : (
           <>
-            <S.Wrap className='no-text-select'>
+            <S.Wrap className='stop-text-select'>
               <AddRounded /> New Task
             </S.Wrap>
           </>

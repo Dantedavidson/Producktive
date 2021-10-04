@@ -8,14 +8,6 @@ export default createGlobalStyle`
     box-sizing:border-box;
     margin:0;
     padding:0;
-    //Remove text select
-    -webkit-touch-callout: none; 
-    -webkit-user-select: none; 
-    -khtml-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
-    user-select: none;  
-
 }
 body{
     background-image: url(${Background});
@@ -45,13 +37,14 @@ textarea {
 
 
    
-.allow-text-select {
-    -webkit-touch-callout: text; 
-    -webkit-user-select: text; 
-    -khtml-user-select: text; 
-    -moz-user-select: text; 
-    -ms-user-select: text; 
-    user-select: text;  
+.stop-text-select {
+       //Remove text select
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;   
 }
 
 .smooth-dnd-container{

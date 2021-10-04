@@ -43,13 +43,5 @@ export const Row = styled.div`
 `;
 
 export const Input = styled(TextareaAutosize)`
-  && {
-    width: 100%;
-    -webkit-touch-callout: text;
-    -webkit-user-select: text;
-    -khtml-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-  }
+  width: 100%;
 `;

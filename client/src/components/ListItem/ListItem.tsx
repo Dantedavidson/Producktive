@@ -48,7 +48,10 @@ export const ListItem = ({
           <S.ModalBg $active={modal} />
 
           <S.Container>
-            <S.Title className='drag-handle' status={task.status}>
+            <S.Title
+              className='drag-handle stop-text-select'
+              status={task.status}
+            >
               {task.title}
             </S.Title>
             <S.IconWrapper>

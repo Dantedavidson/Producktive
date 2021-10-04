@@ -35,7 +35,7 @@ const EditInput = ({
         setValue={inputHandler}
         handleEnter={enterHandler}
       />
-      <S.Row>
+      <S.Row className='stop-text-select'>
         <Button
           variant='contained'
           color='primary'

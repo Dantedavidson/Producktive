@@ -61,7 +61,7 @@ const List = ({ column, tasks }: ListProps) => {
               />
             ) : (
               <S.Title
-                className='dragHandle'
+                className='dragHandle stop-text-select'
                 onClick={() => setEditTitle(true)}
               >
                 {column.title}

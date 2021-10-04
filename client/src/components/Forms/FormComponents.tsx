@@ -25,6 +25,7 @@ export const Input = ({
       defaultValue={defaultValue}
       render={({ field }) => (
         <TextField
+          className='allow-text-select'
           {...field}
           label={label}
           variant='outlined'
