@@ -96,7 +96,7 @@ export const ListItem = ({
             >
               <S.Wrap>
                 {/* Modal Header */}
-                <S.Row>
+                <S.Row style={{ maxWidth: '95%' }}>
                   {editTitle ? (
                     <Input
                       ref={titleRef}

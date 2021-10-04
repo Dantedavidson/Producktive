@@ -65,7 +65,7 @@ export const Title = styled.p<{ status: boolean }>`
 
 export const ModalTitle = styled.h2`
   font-size: 1.2rem;
-  max-width: 95%;
+  max-width: 100%;
 `;
 
 export const SmallText = styled.p`
